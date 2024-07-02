@@ -36,4 +36,4 @@ python:
   packageName: speakeasy-bar-py
   projectUrls: {}
   responseFormat: envelope-http
-  templateVersion: v1
+  templateVersion: v2
