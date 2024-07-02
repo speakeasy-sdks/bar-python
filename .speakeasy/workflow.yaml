@@ -1,0 +1,11 @@
+workflowVersion: 1.0.0
+sources:
+    bar-openapi:
+        inputs:
+            - location: ./openapi.yaml
+        registry:
+            location: registry.speakeasyapi.dev/monite/monite-dev/bar-openapi
+targets:
+    my-first-target:
+        target: python
+        source: bar-openapi
