@@ -16,13 +16,12 @@ Authenticate with the API by providing a username and password.
 ### Example Usage
 
 ```python
-import barpython
-from barpython.models import operations
+from speakeasy_bar_py import BarPython
 
-s = barpython.BarPython()
+s = BarPython()
 
 
-res = s.authentication.authenticate(request=operations.AuthenticateRequestBody())
+res = s.authentication.authenticate(request={})
 
 if res.object is not None:
     # handle response

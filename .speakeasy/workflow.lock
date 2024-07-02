@@ -1,16 +1,16 @@
 speakeasyVersion: 1.318.0
 sources:
     bar-openapi:
-        sourceNamespace: bar-openapi
-        sourceRevisionDigest: sha256:2af258461143bb369f3da05912d95a9d1af76a2b6c979ce2881495562883f918
+        sourceNamespace: bar-api
+        sourceRevisionDigest: sha256:98dbb36eacb23a6256f7d5730fa75cafe399fa7a6493a0f2864c82a66e4fd7b2
         sourceBlobDigest: sha256:6ccaf32c0dcf29bd69ceed066e4f7b1980daba6e1c29f5853b55fa04cf08e82d
         tags:
             - latest
 targets:
     my-first-target:
         source: bar-openapi
-        sourceNamespace: bar-openapi
-        sourceRevisionDigest: sha256:2af258461143bb369f3da05912d95a9d1af76a2b6c979ce2881495562883f918
+        sourceNamespace: bar-api
+        sourceRevisionDigest: sha256:98dbb36eacb23a6256f7d5730fa75cafe399fa7a6493a0f2864c82a66e4fd7b2
         sourceBlobDigest: sha256:6ccaf32c0dcf29bd69ceed066e4f7b1980daba6e1c29f5853b55fa04cf08e82d
         outLocation: /Users/ndimares/speakeasy/client_sdks/speakeasy-bar/bar-python
 workflow:
@@ -20,7 +20,7 @@ workflow:
             inputs:
                 - location: ./openapi.yaml
             registry:
-                location: registry.speakeasyapi.dev/monite/monite-dev/bar-openapi
+                location: registry.speakeasyapi.dev/speakeasy-bar-test/speakeasy-bar-test/bar-api
     targets:
         my-first-target:
             target: python

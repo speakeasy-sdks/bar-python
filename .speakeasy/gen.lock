@@ -5,70 +5,84 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.318.0
   generationVersion: 2.352.0
-  releaseVersion: 0.0.1
-  configChecksum: aeb0d300a9c3a44e6baf10786124f970
+  releaseVersion: 0.0.2
+  configChecksum: 7f6c02390b2ea92d7195d91714d72cbb
 features:
   python:
     additionalDependencies: 0.1.0
-    callbacks: 1.0.0
-    core: 4.6.13
-    errors: 2.81.10
-    examples: 2.81.3
-    flattening: 2.81.1
-    globalSecurity: 2.83.5
+    callbacks: 0.1.0
+    core: 0.2.4
+    errors: 0.1.0
+    examples: 0.1.0
+    flattening: 0.1.0
+    globalSecurity: 0.1.0
     globalSecurityCallbacks: 0.1.0
-    globalServerURLs: 2.82.2
-    inputOutputModels: 2.83.1
-    oauth2ClientCredentials: 0.1.2
+    globalServerURLs: 0.1.0
+    inputOutputModels: 0.1.0
+    oauth2ClientCredentials: 0.1.0
     responseFormat: 0.1.0
-    retries: 2.82.2
+    retries: 0.1.0
     sdkHooks: 0.1.0
-    serverIDs: 2.81.1
-    webhooks: 1.0.0
+    serverIDs: 0.1.0
+    webhooks: 0.1.0
 generatedFiles:
-  - src/barpython/sdkconfiguration.py
-  - src/barpython/authentication.py
-  - src/barpython/drinks.py
-  - src/barpython/ingredients.py
-  - src/barpython/orders.py
-  - src/barpython/config.py
-  - src/barpython/sdk.py
+  - src/speakeasy_bar_py/sdkconfiguration.py
+  - src/speakeasy_bar_py/authentication.py
+  - src/speakeasy_bar_py/drinks.py
+  - src/speakeasy_bar_py/ingredients.py
+  - src/speakeasy_bar_py/orders.py
+  - src/speakeasy_bar_py/config.py
+  - src/speakeasy_bar_py/sdk.py
   - py.typed
   - pylintrc
+  - pyproject.toml
   - scripts/publish.sh
-  - setup.py
-  - src/barpython/__init__.py
-  - src/barpython/utils/__init__.py
-  - src/barpython/utils/retries.py
-  - src/barpython/utils/utils.py
-  - src/barpython/models/errors/sdkerror.py
-  - src/barpython/models/operations/authenticate.py
-  - src/barpython/models/operations/listdrinks.py
-  - src/barpython/models/operations/getdrink.py
-  - src/barpython/models/operations/listingredients.py
-  - src/barpython/models/operations/createorder.py
-  - src/barpython/models/operations/subscribetowebhooks.py
-  - src/barpython/models/components/error.py
-  - src/barpython/models/components/httpmetadata.py
-  - src/barpython/models/components/drink.py
-  - src/barpython/models/components/drinktype.py
-  - src/barpython/models/components/order.py
-  - src/barpython/models/components/ordertype.py
-  - src/barpython/models/components/order_input.py
-  - src/barpython/models/components/security.py
-  - src/barpython/models/components/schemeclientcredentials.py
-  - src/barpython/models/components/ingredient.py
-  - src/barpython/models/components/ingredienttype.py
-  - src/barpython/models/components/drink_input.py
-  - src/barpython/models/errors/apierror.py
-  - src/barpython/models/callbacks/createorder.py
-  - src/barpython/models/webhooks/stockupdate.py
-  - src/barpython/models/__init__.py
-  - src/barpython/models/errors/__init__.py
-  - src/barpython/models/operations/__init__.py
-  - src/barpython/models/components/__init__.py
-  - src/barpython/models/callbacks/__init__.py
-  - src/barpython/models/webhooks/__init__.py
+  - src/speakeasy_bar_py/__init__.py
+  - src/speakeasy_bar_py/basesdk.py
+  - src/speakeasy_bar_py/httpclient.py
+  - src/speakeasy_bar_py/types/__init__.py
+  - src/speakeasy_bar_py/types/basemodel.py
+  - src/speakeasy_bar_py/utils/__init__.py
+  - src/speakeasy_bar_py/utils/enums.py
+  - src/speakeasy_bar_py/utils/eventstreaming.py
+  - src/speakeasy_bar_py/utils/forms.py
+  - src/speakeasy_bar_py/utils/headers.py
+  - src/speakeasy_bar_py/utils/metadata.py
+  - src/speakeasy_bar_py/utils/queryparams.py
+  - src/speakeasy_bar_py/utils/requestbodies.py
+  - src/speakeasy_bar_py/utils/retries.py
+  - src/speakeasy_bar_py/utils/security.py
+  - src/speakeasy_bar_py/utils/serializers.py
+  - src/speakeasy_bar_py/utils/url.py
+  - src/speakeasy_bar_py/utils/values.py
+  - src/speakeasy_bar_py/models/errors/sdkerror.py
+  - src/speakeasy_bar_py/models/operations/authenticate.py
+  - src/speakeasy_bar_py/models/operations/listdrinks.py
+  - src/speakeasy_bar_py/models/operations/getdrink.py
+  - src/speakeasy_bar_py/models/operations/listingredients.py
+  - src/speakeasy_bar_py/models/operations/createorder.py
+  - src/speakeasy_bar_py/models/operations/subscribetowebhooks.py
+  - src/speakeasy_bar_py/models/components/error.py
+  - src/speakeasy_bar_py/models/components/httpmetadata.py
+  - src/speakeasy_bar_py/models/components/drink.py
+  - src/speakeasy_bar_py/models/components/drinktype.py
+  - src/speakeasy_bar_py/models/components/order.py
+  - src/speakeasy_bar_py/models/components/ordertype.py
+  - src/speakeasy_bar_py/models/components/order_input.py
+  - src/speakeasy_bar_py/models/components/security.py
+  - src/speakeasy_bar_py/models/components/schemeclientcredentials.py
+  - src/speakeasy_bar_py/models/components/ingredient.py
+  - src/speakeasy_bar_py/models/components/ingredienttype.py
+  - src/speakeasy_bar_py/models/components/drink_input.py
+  - src/speakeasy_bar_py/models/errors/apierror.py
+  - src/speakeasy_bar_py/models/callbacks/createorder.py
+  - src/speakeasy_bar_py/models/webhooks/stockupdate.py
+  - src/speakeasy_bar_py/models/__init__.py
+  - src/speakeasy_bar_py/models/errors/__init__.py
+  - src/speakeasy_bar_py/models/operations/__init__.py
+  - src/speakeasy_bar_py/models/components/__init__.py
+  - src/speakeasy_bar_py/models/callbacks/__init__.py
+  - src/speakeasy_bar_py/models/webhooks/__init__.py
   - docs/models/operations/authenticaterequestbody.md
   - docs/models/operations/authenticateresponsebody.md
   - docs/models/operations/authenticateresponse.md
@@ -112,7 +126,7 @@ generatedFiles:
   - docs/sdks/config/README.md
   - USAGE.md
   - .gitattributes
-  - src/barpython/_hooks/sdkhooks.py
-  - src/barpython/_hooks/types.py
-  - src/barpython/_hooks/__init__.py
-  - src/barpython/_hooks/clientcredentials.py
+  - src/speakeasy_bar_py/_hooks/sdkhooks.py
+  - src/speakeasy_bar_py/_hooks/types.py
+  - src/speakeasy_bar_py/_hooks/__init__.py
+  - src/speakeasy_bar_py/_hooks/clientcredentials.py

@@ -16,10 +16,10 @@ Get a list of ingredients, if authenticated this will include stock levels and p
 ### Example Usage
 
 ```python
-import barpython
-from barpython.models import components
+from speakeasy_bar_py import BarPython
+from speakeasy_bar_py.models import components
 
-s = barpython.BarPython(
+s = BarPython(
     security=components.Security(
         api_key="<YOUR_API_KEY_HERE>",
     ),
@@ -27,7 +27,7 @@ s = barpython.BarPython(
 
 
 res = s.ingredients.list_ingredients(page=347327, ingredients=[
-    '<value>',
+    "<value>",
 ])
 
 if res.object is not None:

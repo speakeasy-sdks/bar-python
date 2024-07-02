@@ -12,10 +12,10 @@ Subscribe to webhooks.
 ### Example Usage
 
 ```python
-import barpython
-from barpython.models import components, operations
+from speakeasy_bar_py import BarPython
+from speakeasy_bar_py.models import components
 
-s = barpython.BarPython(
+s = BarPython(
     security=components.Security(
         api_key="<YOUR_API_KEY_HERE>",
     ),
@@ -23,7 +23,7 @@ s = barpython.BarPython(
 
 
 res = s.config.subscribe_to_webhooks(request=[
-    operations.RequestBody(),
+    {},
 ])
 
 if res is not None:

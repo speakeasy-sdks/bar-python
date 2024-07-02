@@ -19,8 +19,14 @@ It has been generated successfully based on your OpenAPI spec. However, it is no
 <!-- Start SDK Installation [installation] -->
 ## SDK Installation
 
+PIP
 ```bash
 pip install git+<UNSET>.git
+```
+
+Poetry
+```bash
+poetry add git+<UNSET>.git
 ```
 <!-- End SDK Installation [installation] -->
 
@@ -30,10 +36,11 @@ pip install git+<UNSET>.git
 ### Example 1
 
 ```python
-import barpython
-from barpython.models import components
+# Synchronous Example
+from speakeasy_bar_py import BarPython
+from speakeasy_bar_py.models import components
 
-s = barpython.BarPython(
+s = BarPython(
     security=components.Security(
         api_key="<YOUR_API_KEY_HERE>",
     ),
@@ -45,16 +52,39 @@ res = s.drinks.list_drinks(drink_type=components.DrinkType.SPIRIT)
 if res.drinks is not None:
     # handle response
     pass
+```
 
+</br>
+
+The same SDK client can also be used to make asychronous requests by importing asyncio.
+```python
+# Asynchronous Example
+import asyncio
+from speakeasy_bar_py import BarPython
+from speakeasy_bar_py.models import components
+
+async def main():
+    s = BarPython(
+        security=components.Security(
+            api_key="<YOUR_API_KEY_HERE>",
+        ),
+    )
+    res = await s.drinks.list_drinks_async(drink_type=components.DrinkType.OTHER)
+    if res.drinks is not None:
+        # handle response
+        pass
+
+asyncio.run(main())
 ```
 
 ### Example 2
 
 ```python
-import barpython
-from barpython.models import components
+# Synchronous Example
+from speakeasy_bar_py import BarPython
+from speakeasy_bar_py.models import components
 
-s = barpython.BarPython(
+s = BarPython(
     security=components.Security(
         api_key="<YOUR_API_KEY_HERE>",
     ),
@@ -62,17 +92,45 @@ s = barpython.BarPython(
 
 
 res = s.orders.create_order(request_body=[
-    components.OrderInput(
-        type=components.OrderType.INGREDIENT,
-        product_code='AC-A2DF3',
-        quantity=138554,
-    ),
-], callback_url='<value>')
+    {
+        "type": components.OrderType.INGREDIENT,
+        "product_code": "AC-A2DF3",
+        "quantity": 138554,
+    },
+], callback_url="<value>")
 
 if res.order is not None:
     # handle response
     pass
+```
 
+</br>
+
+The same SDK client can also be used to make asychronous requests by importing asyncio.
+```python
+# Asynchronous Example
+import asyncio
+from speakeasy_bar_py import BarPython
+from speakeasy_bar_py.models import components
+
+async def main():
+    s = BarPython(
+        security=components.Security(
+            api_key="<YOUR_API_KEY_HERE>",
+        ),
+    )
+    res = await s.orders.create_order_async(request_body=[
+        {
+            "type": components.OrderType.DRINK,
+            "product_code": "NAC-3F2D1",
+            "quantity": 547214,
+        },
+    ], callback_url="<value>")
+    if res.order is not None:
+        # handle response
+        pass
+
+asyncio.run(main())
 ```
 <!-- End SDK Example Usage [usage] -->
 
@@ -108,15 +166,14 @@ Some of the endpoints in this SDK support retries. If you use the SDK without an
 
 To change the default retry strategy for a single API call, simply provide a `RetryConfig` object to the call:
 ```python
-import barpython
-from barpython.models import operations
 from barpython.utils import BackoffStrategy, RetryConfig
+from speakeasy_bar_py import BarPython
 
-s = barpython.BarPython()
+s = BarPython()
 
 
-res = s.authentication.authenticate(request=operations.AuthenticateRequestBody(),
-    RetryConfig('backoff', BackoffStrategy(1, 50, 1.1, 100), False))
+res = s.authentication.authenticate(request={},
+    RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
 if res.object is not None:
     # handle response
@@ -126,16 +183,15 @@ if res.object is not None:
 
 If you'd like to override the default retry strategy for all operations that support retries, you can use the `retry_config` optional parameter when initializing the SDK:
 ```python
-import barpython
-from barpython.models import operations
 from barpython.utils import BackoffStrategy, RetryConfig
+from speakeasy_bar_py import BarPython
 
-s = barpython.BarPython(
-    retry_config=RetryConfig('backoff', BackoffStrategy(1, 50, 1.1, 100), False),
+s = BarPython(
+    retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
 )
 
 
-res = s.authentication.authenticate(request=operations.AuthenticateRequestBody())
+res = s.authentication.authenticate(request={})
 
 if res.object is not None:
     # handle response
@@ -157,14 +213,14 @@ Handling errors in this SDK should largely match your expectations.  All operati
 ### Example
 
 ```python
-import barpython
-from barpython.models import errors, operations
+from speakeasy_bar_py import BarPython
+from speakeasy_bar_py.models import errors
 
-s = barpython.BarPython()
+s = BarPython()
 
 res = None
 try:
-    res = s.authentication.authenticate(request=operations.AuthenticateRequestBody())
+    res = s.authentication.authenticate(request={})
 
 except errors.APIError as e:
     # handle exception
@@ -196,15 +252,14 @@ You can override the default server globally by passing a server name to the `se
 #### Example
 
 ```python
-import barpython
-from barpython.models import operations
+from speakeasy_bar_py import BarPython
 
-s = barpython.BarPython(
+s = BarPython(
     server="customer",
 )
 
 
-res = s.authentication.authenticate(request=operations.AuthenticateRequestBody())
+res = s.authentication.authenticate(request={})
 
 if res.object is not None:
     # handle response
@@ -222,15 +277,14 @@ Some of the server options above contain variables. If you want to set the value
 
 The default server can also be overridden globally by passing a URL to the `server_url: str` optional parameter when initializing the SDK client instance. For example:
 ```python
-import barpython
-from barpython.models import operations
+from speakeasy_bar_py import BarPython
 
-s = barpython.BarPython(
+s = BarPython(
     server_url="https://speakeasy.bar",
 )
 
 
-res = s.authentication.authenticate(request=operations.AuthenticateRequestBody())
+res = s.authentication.authenticate(request={})
 
 if res.object is not None:
     # handle response
@@ -242,16 +296,81 @@ if res.object is not None:
 <!-- Start Custom HTTP Client [http-client] -->
 ## Custom HTTP Client
 
-The Python SDK makes API calls using the [requests](https://pypi.org/project/requests/) HTTP library.  In order to provide a convenient way to configure timeouts, cookies, proxies, custom headers, and other low-level configuration, you can initialize the SDK client with a custom `requests.Session` object.
+The Python SDK makes API calls using the [httpx](https://www.python-httpx.org/) HTTP library.  In order to provide a convenient way to configure timeouts, cookies, proxies, custom headers, and other low-level configuration, you can initialize the SDK client with your own HTTP client instance.
+Depending on whether you are using the sync or async version of the SDK, you can pass an instance of `HttpClient` or `AsyncHttpClient` respectively, which are Protocol's ensuring that the client has the necessary methods to make API calls.
+This allows you to wrap the client with your own custom logic, such as adding custom headers, logging, or error handling, or you can just pass an instance of `httpx.Client` or `httpx.AsyncClient` directly.
 
 For example, you could specify a header for every request that this sdk makes as follows:
 ```python
-import barpython
-import requests
+from speakeasy_bar_py import BarPython
+import httpx
 
-http_client = requests.Session()
-http_client.headers.update({'x-custom-header': 'someValue'})
-s = barpython.BarPython(client=http_client)
+http_client = httpx.Client(headers={"x-custom-header": "someValue"})
+s = BarPython(client=http_client)
+```
+
+or you could wrap the client with your own custom logic:
+```python
+from speakeasy_bar_py import BarPython
+from speakeasy_bar_py.httpclient import AsyncHttpClient
+import httpx
+
+class CustomClient(AsyncHttpClient):
+    client: AsyncHttpClient
+
+    def __init__(self, client: AsyncHttpClient):
+        self.client = client
+
+    async def send(
+        self,
+        request: httpx.Request,
+        *,
+        stream: bool = False,
+        auth: Union[
+            httpx._types.AuthTypes, httpx._client.UseClientDefault, None
+        ] = httpx.USE_CLIENT_DEFAULT,
+        follow_redirects: Union[
+            bool, httpx._client.UseClientDefault
+        ] = httpx.USE_CLIENT_DEFAULT,
+    ) -> httpx.Response:
+        request.headers["Client-Level-Header"] = "added by client"
+
+        return await self.client.send(
+            request, stream=stream, auth=auth, follow_redirects=follow_redirects
+        )
+
+    def build_request(
+        self,
+        method: str,
+        url: httpx._types.URLTypes,
+        *,
+        content: Optional[httpx._types.RequestContent] = None,
+        data: Optional[httpx._types.RequestData] = None,
+        files: Optional[httpx._types.RequestFiles] = None,
+        json: Optional[Any] = None,
+        params: Optional[httpx._types.QueryParamTypes] = None,
+        headers: Optional[httpx._types.HeaderTypes] = None,
+        cookies: Optional[httpx._types.CookieTypes] = None,
+        timeout: Union[
+            httpx._types.TimeoutTypes, httpx._client.UseClientDefault
+        ] = httpx.USE_CLIENT_DEFAULT,
+        extensions: Optional[httpx._types.RequestExtensions] = None,
+    ) -> httpx.Request:
+        return self.client.build_request(
+            method,
+            url,
+            content=content,
+            data=data,
+            files=files,
+            json=json,
+            params=params,
+            headers=headers,
+            cookies=cookies,
+            timeout=timeout,
+            extensions=extensions,
+        )
+
+s = BarPython(async_client=CustomClient(httpx.AsyncClient()))
 ```
 <!-- End Custom HTTP Client [http-client] -->
 
@@ -269,17 +388,17 @@ This SDK supports the following security schemes globally:
 
 You can set the security parameters through the `security` optional parameter when initializing the SDK client instance. The selected scheme will be used by default to authenticate with the API for all operations that support it. For example:
 ```python
-import barpython
-from barpython.models import components, operations
+from speakeasy_bar_py import BarPython
+from speakeasy_bar_py.models import components
 
-s = barpython.BarPython(
+s = BarPython(
     security=components.Security(
         api_key="<YOUR_API_KEY_HERE>",
     ),
 )
 
 
-res = s.authentication.authenticate(request=operations.AuthenticateRequestBody())
+res = s.authentication.authenticate(request={})
 
 if res.object is not None:
     # handle response

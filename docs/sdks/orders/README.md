@@ -16,10 +16,10 @@ Create an order for a drink.
 ### Example Usage
 
 ```python
-import barpython
-from barpython.models import components
+from speakeasy_bar_py import BarPython
+from speakeasy_bar_py.models import components
 
-s = barpython.BarPython(
+s = BarPython(
     security=components.Security(
         api_key="<YOUR_API_KEY_HERE>",
     ),
@@ -27,12 +27,12 @@ s = barpython.BarPython(
 
 
 res = s.orders.create_order(request_body=[
-    components.OrderInput(
-        type=components.OrderType.INGREDIENT,
-        product_code='AC-A2DF3',
-        quantity=138554,
-    ),
-], callback_url='<value>')
+    {
+        "type": components.OrderType.INGREDIENT,
+        "product_code": "AC-A2DF3",
+        "quantity": 138554,
+    },
+], callback_url="<value>")
 
 if res.order is not None:
     # handle response

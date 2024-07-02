@@ -4,7 +4,7 @@ sources:
         inputs:
             - location: ./openapi.yaml
         registry:
-            location: registry.speakeasyapi.dev/monite/monite-dev/bar-openapi
+            location: registry.speakeasyapi.dev/speakeasy-bar-test/speakeasy-bar-test/bar-api
 targets:
     my-first-target:
         target: python

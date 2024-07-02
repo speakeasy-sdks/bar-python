@@ -17,10 +17,10 @@ Get a list of drinks, if authenticated this will include stock levels and produc
 ### Example Usage
 
 ```python
-import barpython
-from barpython.models import components
+from speakeasy_bar_py import BarPython
+from speakeasy_bar_py.models import components
 
-s = barpython.BarPython(
+s = BarPython(
     security=components.Security(
         api_key="<YOUR_API_KEY_HERE>",
     ),
@@ -60,17 +60,17 @@ Get a drink by name, if authenticated this will include stock levels and product
 ### Example Usage
 
 ```python
-import barpython
-from barpython.models import components
+from speakeasy_bar_py import BarPython
+from speakeasy_bar_py.models import components
 
-s = barpython.BarPython(
+s = BarPython(
     security=components.Security(
         api_key="<YOUR_API_KEY_HERE>",
     ),
 )
 
 
-res = s.drinks.get_drink(name='<value>')
+res = s.drinks.get_drink(name="<value>")
 
 if res.drink is not None:
     # handle response
