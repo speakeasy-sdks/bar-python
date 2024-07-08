@@ -12,7 +12,7 @@ class Ingredients(BaseSDK):
     
     
     def list_ingredients(
-        self,
+        self, *,
         page: int,
         ingredients: Optional[List[str]] = None,
         retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
@@ -26,7 +26,6 @@ class Ingredients(BaseSDK):
         :param ingredients: A list of ingredients to filter by. If not provided all ingredients will be returned.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param accept_header_override: Override the default accept header for this method
         """
         base_url = None
         url_variables = None
@@ -73,40 +72,24 @@ class Ingredients(BaseSDK):
         
         res = operations.ListIngredientsResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
-        if http_res.status_code == 200:
-            # pylint: disable=no-else-return
-            if utils.match_content_type(http_res.headers.get("Content-Type") or "", "application/json"):                
-                out = utils.unmarshal_json(http_res.text, Optional[operations.ListIngredientsResponseBody])
-                res.object = out
-            else:
-                content_type = http_res.headers.get("Content-Type")
-                raise errors.SDKError(f"unknown content-type received: {content_type}", http_res.status_code, http_res.text, http_res)
-        elif http_res.status_code >= 400 and http_res.status_code < 500:
+        if utils.match_response(http_res, "200", "application/json"):
+            res.object = utils.unmarshal_json(http_res.text, Optional[operations.ListIngredientsResponseBody])
+        elif utils.match_response(http_res, "4XX", "*"):
             raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        elif http_res.status_code >= 500 and http_res.status_code < 600:
-            # pylint: disable=no-else-return
-            if utils.match_content_type(http_res.headers.get("Content-Type") or "", "application/json"):                
-                data = utils.unmarshal_json(http_res.text, errors.APIErrorData)
-                out = errors.APIError(data=data)
-                  
-                raise out
-            else:
-                content_type = http_res.headers.get("Content-Type")
-                raise errors.SDKError(f"unknown content-type received: {content_type}", http_res.status_code, http_res.text, http_res)
+        elif utils.match_response(http_res, "5XX", "application/json"):
+            data = utils.unmarshal_json(http_res.text, errors.APIErrorData)
+            raise errors.APIError(data=data)
+        elif utils.match_response(http_res, "default", "application/json"):
+            res.error = utils.unmarshal_json(http_res.text, Optional[components.Error])
         else:
-            # pylint: disable=no-else-return
-            if utils.match_content_type(http_res.headers.get("Content-Type") or "", "application/json"):                
-                out = utils.unmarshal_json(http_res.text, Optional[components.Error])
-                res.error = out
-            else:
-                content_type = http_res.headers.get("Content-Type")
-                raise errors.SDKError(f"unknown content-type received: {content_type}", http_res.status_code, http_res.text, http_res)
+            content_type = http_res.headers.get("Content-Type")
+            raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
 
         return res
     
     
     async def list_ingredients_async(
-        self,
+        self, *,
         page: int,
         ingredients: Optional[List[str]] = None,
         retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
@@ -120,7 +103,6 @@ class Ingredients(BaseSDK):
         :param ingredients: A list of ingredients to filter by. If not provided all ingredients will be returned.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param accept_header_override: Override the default accept header for this method
         """
         base_url = None
         url_variables = None
@@ -167,34 +149,18 @@ class Ingredients(BaseSDK):
         
         res = operations.ListIngredientsResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
-        if http_res.status_code == 200:
-            # pylint: disable=no-else-return
-            if utils.match_content_type(http_res.headers.get("Content-Type") or "", "application/json"):                
-                out = utils.unmarshal_json(http_res.text, Optional[operations.ListIngredientsResponseBody])
-                res.object = out
-            else:
-                content_type = http_res.headers.get("Content-Type")
-                raise errors.SDKError(f"unknown content-type received: {content_type}", http_res.status_code, http_res.text, http_res)
-        elif http_res.status_code >= 400 and http_res.status_code < 500:
+        if utils.match_response(http_res, "200", "application/json"):
+            res.object = utils.unmarshal_json(http_res.text, Optional[operations.ListIngredientsResponseBody])
+        elif utils.match_response(http_res, "4XX", "*"):
             raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        elif http_res.status_code >= 500 and http_res.status_code < 600:
-            # pylint: disable=no-else-return
-            if utils.match_content_type(http_res.headers.get("Content-Type") or "", "application/json"):                
-                data = utils.unmarshal_json(http_res.text, errors.APIErrorData)
-                out = errors.APIError(data=data)
-                  
-                raise out
-            else:
-                content_type = http_res.headers.get("Content-Type")
-                raise errors.SDKError(f"unknown content-type received: {content_type}", http_res.status_code, http_res.text, http_res)
+        elif utils.match_response(http_res, "5XX", "application/json"):
+            data = utils.unmarshal_json(http_res.text, errors.APIErrorData)
+            raise errors.APIError(data=data)
+        elif utils.match_response(http_res, "default", "application/json"):
+            res.error = utils.unmarshal_json(http_res.text, Optional[components.Error])
         else:
-            # pylint: disable=no-else-return
-            if utils.match_content_type(http_res.headers.get("Content-Type") or "", "application/json"):                
-                out = utils.unmarshal_json(http_res.text, Optional[components.Error])
-                res.error = out
-            else:
-                content_type = http_res.headers.get("Content-Type")
-                raise errors.SDKError(f"unknown content-type received: {content_type}", http_res.status_code, http_res.text, http_res)
+            content_type = http_res.headers.get("Content-Type")
+            raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
 
         return res
     

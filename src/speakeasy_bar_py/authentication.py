@@ -12,7 +12,7 @@ class Authentication(BaseSDK):
     
     
     def authenticate(
-        self,
+        self, *,
         request: Union[operations.AuthenticateRequestBody, operations.AuthenticateRequestBodyTypedDict],
         retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
         server_url: Optional[str] = None,
@@ -22,7 +22,6 @@ class Authentication(BaseSDK):
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param accept_header_override: Override the default accept header for this method
         """
         base_url = None
         url_variables = None
@@ -67,40 +66,24 @@ class Authentication(BaseSDK):
         
         res = operations.AuthenticateResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
-        if http_res.status_code == 200:
-            # pylint: disable=no-else-return
-            if utils.match_content_type(http_res.headers.get("Content-Type") or "", "application/json"):                
-                out = utils.unmarshal_json(http_res.text, Optional[operations.AuthenticateResponseBody])
-                res.object = out
-            else:
-                content_type = http_res.headers.get("Content-Type")
-                raise errors.SDKError(f"unknown content-type received: {content_type}", http_res.status_code, http_res.text, http_res)
-        elif http_res.status_code == 401 or http_res.status_code >= 400 and http_res.status_code < 500:
+        if utils.match_response(http_res, "200", "application/json"):
+            res.object = utils.unmarshal_json(http_res.text, Optional[operations.AuthenticateResponseBody])
+        elif utils.match_response(http_res, ["401","4XX"], "*"):
             raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        elif http_res.status_code >= 500 and http_res.status_code < 600:
-            # pylint: disable=no-else-return
-            if utils.match_content_type(http_res.headers.get("Content-Type") or "", "application/json"):                
-                data = utils.unmarshal_json(http_res.text, errors.APIErrorData)
-                out = errors.APIError(data=data)
-                  
-                raise out
-            else:
-                content_type = http_res.headers.get("Content-Type")
-                raise errors.SDKError(f"unknown content-type received: {content_type}", http_res.status_code, http_res.text, http_res)
+        elif utils.match_response(http_res, "5XX", "application/json"):
+            data = utils.unmarshal_json(http_res.text, errors.APIErrorData)
+            raise errors.APIError(data=data)
+        elif utils.match_response(http_res, "default", "application/json"):
+            res.error = utils.unmarshal_json(http_res.text, Optional[components.Error])
         else:
-            # pylint: disable=no-else-return
-            if utils.match_content_type(http_res.headers.get("Content-Type") or "", "application/json"):                
-                out = utils.unmarshal_json(http_res.text, Optional[components.Error])
-                res.error = out
-            else:
-                content_type = http_res.headers.get("Content-Type")
-                raise errors.SDKError(f"unknown content-type received: {content_type}", http_res.status_code, http_res.text, http_res)
+            content_type = http_res.headers.get("Content-Type")
+            raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
 
         return res
     
     
     async def authenticate_async(
-        self,
+        self, *,
         request: Union[operations.AuthenticateRequestBody, operations.AuthenticateRequestBodyTypedDict],
         retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
         server_url: Optional[str] = None,
@@ -110,7 +93,6 @@ class Authentication(BaseSDK):
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param accept_header_override: Override the default accept header for this method
         """
         base_url = None
         url_variables = None
@@ -155,34 +137,18 @@ class Authentication(BaseSDK):
         
         res = operations.AuthenticateResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
-        if http_res.status_code == 200:
-            # pylint: disable=no-else-return
-            if utils.match_content_type(http_res.headers.get("Content-Type") or "", "application/json"):                
-                out = utils.unmarshal_json(http_res.text, Optional[operations.AuthenticateResponseBody])
-                res.object = out
-            else:
-                content_type = http_res.headers.get("Content-Type")
-                raise errors.SDKError(f"unknown content-type received: {content_type}", http_res.status_code, http_res.text, http_res)
-        elif http_res.status_code == 401 or http_res.status_code >= 400 and http_res.status_code < 500:
+        if utils.match_response(http_res, "200", "application/json"):
+            res.object = utils.unmarshal_json(http_res.text, Optional[operations.AuthenticateResponseBody])
+        elif utils.match_response(http_res, ["401","4XX"], "*"):
             raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        elif http_res.status_code >= 500 and http_res.status_code < 600:
-            # pylint: disable=no-else-return
-            if utils.match_content_type(http_res.headers.get("Content-Type") or "", "application/json"):                
-                data = utils.unmarshal_json(http_res.text, errors.APIErrorData)
-                out = errors.APIError(data=data)
-                  
-                raise out
-            else:
-                content_type = http_res.headers.get("Content-Type")
-                raise errors.SDKError(f"unknown content-type received: {content_type}", http_res.status_code, http_res.text, http_res)
+        elif utils.match_response(http_res, "5XX", "application/json"):
+            data = utils.unmarshal_json(http_res.text, errors.APIErrorData)
+            raise errors.APIError(data=data)
+        elif utils.match_response(http_res, "default", "application/json"):
+            res.error = utils.unmarshal_json(http_res.text, Optional[components.Error])
         else:
-            # pylint: disable=no-else-return
-            if utils.match_content_type(http_res.headers.get("Content-Type") or "", "application/json"):                
-                out = utils.unmarshal_json(http_res.text, Optional[components.Error])
-                res.error = out
-            else:
-                content_type = http_res.headers.get("Content-Type")
-                raise errors.SDKError(f"unknown content-type received: {content_type}", http_res.status_code, http_res.text, http_res)
+            content_type = http_res.headers.get("Content-Type")
+            raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
 
         return res
     

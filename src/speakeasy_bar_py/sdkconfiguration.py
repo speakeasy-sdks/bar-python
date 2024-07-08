@@ -43,9 +43,9 @@ class SDKConfiguration:
     server_defaults: Dict[str, Dict[str, str]] = field(default_factory=Dict)
     language: str = "python"
     openapi_doc_version: str = "1.0.0"
-    sdk_version: str = "0.0.2"
-    gen_version: str = "2.352.0"
-    user_agent: str = "speakeasy-sdk/python 0.0.2 2.352.0 1.0.0 speakeasy-bar-py"
+    sdk_version: str = "0.0.3"
+    gen_version: str = "2.359.6"
+    user_agent: str = "speakeasy-sdk/python 0.0.3 2.359.6 1.0.0 speakeasy-bar-py"
     retry_config: Optional[Nullable[RetryConfig]] = UNSET
 
     def __post_init__(self):

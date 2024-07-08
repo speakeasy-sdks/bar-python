@@ -30,7 +30,7 @@ from .serializers import (
     validate_open_enum,
 )
 from .url import generate_url, template_url, remove_suffix
-from .values import match_content_type, match_status_codes
+from .values import match_content_type, match_status_codes, match_response
 
 __all__ = [
     "BackoffStrategy",
@@ -46,6 +46,7 @@ __all__ = [
     "marshal_json",
     "match_content_type",
     "match_status_codes",
+    "match_response",
     "MultipartFormMetadata",
     "OpenEnumMeta",
     "PathParamMetadata",

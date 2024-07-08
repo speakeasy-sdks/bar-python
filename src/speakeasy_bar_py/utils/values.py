@@ -3,8 +3,9 @@
 from datetime import datetime
 from enum import Enum
 from email.message import Message
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Tuple, Union
 
+from httpx import Response
 from pydantic import BaseModel
 from pydantic.fields import FieldInfo
 
@@ -33,6 +34,9 @@ def match_content_type(content_type: str, pattern: str) -> bool:
 
 
 def match_status_codes(status_codes: List[str], status_code: int) -> bool:
+    if "default" in status_codes:
+        return True
+
     for code in status_codes:
         if code == str(status_code):
             return True
@@ -40,6 +44,15 @@ def match_status_codes(status_codes: List[str], status_code: int) -> bool:
         if code.endswith("XX") and code.startswith(str(status_code)[:1]):
             return True
     return False
+
+
+def match_response(
+    response: Response, code: Union[str, List[str]], content_type: str
+) -> bool:
+    codes = code if isinstance(code, list) else [code]
+    return match_status_codes(codes, response.status_code) and match_content_type(
+        response.headers.get("content-type", "application/octet-stream"), content_type
+    )
 
 
 def _populate_from_globals(
