@@ -3,10 +3,12 @@ id: 2ebfbbaa-03d2-4ef1-a2dd-71006dd37355
 management:
   docChecksum: 936f0ff0f6ac9e56df38e51b2591854f
   docVersion: 1.0.0
-  speakeasyVersion: 1.344.0
-  generationVersion: 2.376.0
-  releaseVersion: 0.1.0
-  configChecksum: bbd82afc8dc426a9afe44497a7749d58
+  speakeasyVersion: 1.344.1
+  generationVersion: 2.376.2
+  releaseVersion: 0.1.1
+  configChecksum: 63ea61d919f81649dc5854846c31d0aa
+  repoURL: https://github.com/speakeasy-sdks/bar-python.git
+  installationURL: https://github.com/speakeasy-sdks/bar-python.git
 features:
   python:
     additionalDependencies: 1.0.0
