@@ -8,4 +8,3 @@ class OrderType(str, Enum):
     r"""The type of order."""
     DRINK = "drink"
     INGREDIENT = "ingredient"
-

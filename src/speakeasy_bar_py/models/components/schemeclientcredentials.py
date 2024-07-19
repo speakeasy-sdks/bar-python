@@ -16,5 +16,5 @@ class SchemeClientCredentialsTypedDict(TypedDict):
 class SchemeClientCredentials(BaseModel):
     client_id: Annotated[str, FieldMetadata(security=SecurityMetadata(field_name="clientID"))]
     client_secret: Annotated[str, FieldMetadata(security=SecurityMetadata(field_name="clientSecret"))]
-    TOKEN_URL: Annotated[Final[str], pydantic.Field(alias="TokenURL")] = "https://speakeasy.bar/oauth2/token/"
+    TOKEN_URL: Annotated[Final[str], pydantic.Field(alias="TokenURL")] = "https://speakeasy.bar/oauth2/token/" # type: ignore
     

@@ -9,4 +9,3 @@ class IngredientType(str, Enum):
     FRESH = "fresh"
     LONG_LIFE = "long-life"
     PACKAGED = "packaged"
-

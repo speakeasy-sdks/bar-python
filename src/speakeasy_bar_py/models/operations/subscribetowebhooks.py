@@ -12,7 +12,6 @@ from typing_extensions import Annotated, NotRequired
 class Webhook(str, Enum):
     STOCK_UPDATE = "stockUpdate"
 
-
 class RequestBodyTypedDict(TypedDict):
     url: NotRequired[str]
     webhook: NotRequired[Webhook]

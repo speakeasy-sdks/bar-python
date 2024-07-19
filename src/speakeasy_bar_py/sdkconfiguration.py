@@ -6,8 +6,9 @@ from .httpclient import AsyncHttpClient, HttpClient
 from .utils import RetryConfig, remove_suffix
 from dataclasses import dataclass, field
 from enum import Enum
+from pydantic import Field
 from speakeasy_bar_py.models import components
-from speakeasy_bar_py.types import Nullable, UNSET
+from speakeasy_bar_py.types import OptionalNullable, UNSET
 from typing import Callable, Dict, Optional, Tuple, Union
 
 
@@ -32,7 +33,6 @@ class ServerEnvironment(str, Enum):
     STAGING = "staging"
     DEV = "dev"
 
-
 @dataclass
 class SDKConfiguration:
     client: HttpClient
@@ -43,10 +43,11 @@ class SDKConfiguration:
     server_defaults: Dict[str, Dict[str, str]] = field(default_factory=Dict)
     language: str = "python"
     openapi_doc_version: str = "1.0.0"
-    sdk_version: str = "0.0.2"
-    gen_version: str = "2.352.0"
-    user_agent: str = "speakeasy-sdk/python 0.0.2 2.352.0 1.0.0 speakeasy-bar-py"
-    retry_config: Optional[Nullable[RetryConfig]] = UNSET
+    sdk_version: str = "0.1.0"
+    gen_version: str = "2.376.0"
+    user_agent: str = "speakeasy-sdk/python 0.1.0 2.376.0 1.0.0 speakeasy-bar-py"
+    retry_config: OptionalNullable[RetryConfig] = Field(default_factory=lambda: UNSET)
+    timeout_ms: Optional[int] = None
 
     def __post_init__(self):
         self._hooks = SDKHooks()

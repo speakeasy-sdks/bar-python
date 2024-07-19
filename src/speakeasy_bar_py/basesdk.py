@@ -39,6 +39,7 @@ class BaseSDK:
         accept_header_value,
         _globals=None,
         security=None,
+        timeout_ms: Optional[int] = None,
         get_serialized_body: Optional[
             Callable[[], Optional[SerializedRequestBody]]
         ] = None,
@@ -69,7 +70,8 @@ class BaseSDK:
         if security is not None:
             if callable(security):
                 security = security()
-
+        
+        if security is not None:
             security_headers, security_query_params = utils.get_security(security)
             headers = {**headers, **security_headers}
             query_params = {**query_params, **security_query_params}
@@ -93,6 +95,8 @@ class BaseSDK:
         ):
             headers["content-type"] = serialized_request_body.media_type
 
+        timeout = timeout_ms / 1000 if timeout_ms is not None else None
+
         return client.build_request(
             method,
             url,
@@ -101,6 +105,7 @@ class BaseSDK:
             data=serialized_request_body.data,
             files=serialized_request_body.files,
             headers=headers,
+            timeout=timeout,
         )
 
     def do_request(
@@ -130,11 +135,11 @@ class BaseSDK:
                 raise errors.SDKError("No response received")
 
             if utils.match_status_codes(error_status_codes, http_res.status_code):
-                result, e = self.sdk_configuration.get_hooks().after_error(
+                result, err = self.sdk_configuration.get_hooks().after_error(
                     AfterErrorContext(hook_ctx), http_res, None
                 )
-                if e is not None:
-                    raise e
+                if err is not None:
+                    raise err
                 if result is not None:
                     http_res = result
                 else:
@@ -181,11 +186,11 @@ class BaseSDK:
                 raise errors.SDKError("No response received")
 
             if utils.match_status_codes(error_status_codes, http_res.status_code):
-                result, e = self.sdk_configuration.get_hooks().after_error(
+                result, err = self.sdk_configuration.get_hooks().after_error(
                     AfterErrorContext(hook_ctx), http_res, None
                 )
-                if e is not None:
-                    raise e
+                if err is not None:
+                    raise err
                 if result is not None:
                     http_res = result
                 else:

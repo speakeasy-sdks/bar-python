@@ -3,18 +3,19 @@
 from .basesdk import BaseSDK
 from speakeasy_bar_py._hooks import HookContext
 from speakeasy_bar_py.models import components, errors, operations
-from speakeasy_bar_py.types import BaseModel, Nullable, UNSET
+from speakeasy_bar_py.types import BaseModel, OptionalNullable, UNSET
 import speakeasy_bar_py.utils as utils
-from typing import List, Optional, Union
+from typing import Any, List, Optional, Union, cast
 
 class Config(BaseSDK):
     
     
     def subscribe_to_webhooks(
-        self,
+        self, *,
         request: Union[List[operations.RequestBody], List[operations.RequestBodyTypedDict]],
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
     ) -> operations.SubscribeToWebhooksResponse:
         r"""Subscribe to webhooks.
 
@@ -23,15 +24,19 @@ class Config(BaseSDK):
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param accept_header_override: Override the default accept header for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
         if server_url is not None:
             base_url = server_url
         
         if not isinstance(request, BaseModel):
             request = utils.unmarshal(request, List[operations.RequestBody])
+        request = cast(List[operations.RequestBody], request)
         
         req = self.build_request(
             method="POST",
@@ -46,6 +51,7 @@ class Config(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request, False, False, "json", List[operations.RequestBody]),
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -67,39 +73,28 @@ class Config(BaseSDK):
             retry_config=retry_config
         )
         
-        res = operations.SubscribeToWebhooksResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
-        
-        if http_res.status_code == 200:
-            pass
-        elif http_res.status_code >= 400 and http_res.status_code < 500:
+        data: Any = None
+        if utils.match_response(http_res, "200", "*"):
+            return operations.SubscribeToWebhooksResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
+        if utils.match_response(http_res, "4XX", "*"):
             raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        elif http_res.status_code >= 500 and http_res.status_code < 600:
-            # pylint: disable=no-else-return
-            if utils.match_content_type(http_res.headers.get("Content-Type") or "", "application/json"):                
-                data = utils.unmarshal_json(http_res.text, errors.APIErrorData)
-                out = errors.APIError(data=data)
-                  
-                raise out
-            else:
-                content_type = http_res.headers.get("Content-Type")
-                raise errors.SDKError(f"unknown content-type received: {content_type}", http_res.status_code, http_res.text, http_res)
-        else:
-            # pylint: disable=no-else-return
-            if utils.match_content_type(http_res.headers.get("Content-Type") or "", "application/json"):                
-                out = utils.unmarshal_json(http_res.text, Optional[components.Error])
-                res.error = out
-            else:
-                content_type = http_res.headers.get("Content-Type")
-                raise errors.SDKError(f"unknown content-type received: {content_type}", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, "5XX", "application/json"):
+            data = utils.unmarshal_json(http_res.text, errors.APIErrorData)
+            raise errors.APIError(data=data)
+        if utils.match_response(http_res, "default", "application/json"):
+            return operations.SubscribeToWebhooksResponse(error=utils.unmarshal_json(http_res.text, Optional[components.Error]), http_meta=components.HTTPMetadata(request=req, response=http_res))
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
 
-        return res
     
     
     async def subscribe_to_webhooks_async(
-        self,
+        self, *,
         request: Union[List[operations.RequestBody], List[operations.RequestBodyTypedDict]],
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
     ) -> operations.SubscribeToWebhooksResponse:
         r"""Subscribe to webhooks.
 
@@ -108,15 +103,19 @@ class Config(BaseSDK):
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param accept_header_override: Override the default accept header for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
         if server_url is not None:
             base_url = server_url
         
         if not isinstance(request, BaseModel):
             request = utils.unmarshal(request, List[operations.RequestBody])
+        request = cast(List[operations.RequestBody], request)
         
         req = self.build_request(
             method="POST",
@@ -131,6 +130,7 @@ class Config(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request, False, False, "json", List[operations.RequestBody]),
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -152,30 +152,18 @@ class Config(BaseSDK):
             retry_config=retry_config
         )
         
-        res = operations.SubscribeToWebhooksResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
-        
-        if http_res.status_code == 200:
-            pass
-        elif http_res.status_code >= 400 and http_res.status_code < 500:
+        data: Any = None
+        if utils.match_response(http_res, "200", "*"):
+            return operations.SubscribeToWebhooksResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
+        if utils.match_response(http_res, "4XX", "*"):
             raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        elif http_res.status_code >= 500 and http_res.status_code < 600:
-            # pylint: disable=no-else-return
-            if utils.match_content_type(http_res.headers.get("Content-Type") or "", "application/json"):                
-                data = utils.unmarshal_json(http_res.text, errors.APIErrorData)
-                out = errors.APIError(data=data)
-                  
-                raise out
-            else:
-                content_type = http_res.headers.get("Content-Type")
-                raise errors.SDKError(f"unknown content-type received: {content_type}", http_res.status_code, http_res.text, http_res)
-        else:
-            # pylint: disable=no-else-return
-            if utils.match_content_type(http_res.headers.get("Content-Type") or "", "application/json"):                
-                out = utils.unmarshal_json(http_res.text, Optional[components.Error])
-                res.error = out
-            else:
-                content_type = http_res.headers.get("Content-Type")
-                raise errors.SDKError(f"unknown content-type received: {content_type}", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, "5XX", "application/json"):
+            data = utils.unmarshal_json(http_res.text, errors.APIErrorData)
+            raise errors.APIError(data=data)
+        if utils.match_response(http_res, "default", "application/json"):
+            return operations.SubscribeToWebhooksResponse(error=utils.unmarshal_json(http_res.text, Optional[components.Error]), http_meta=components.HTTPMetadata(request=req, response=http_res))
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
 
-        return res
     

@@ -12,4 +12,3 @@ class DrinkType(str, Enum):
     WINE = "wine"
     SPIRIT = "spirit"
     OTHER = "other"
-

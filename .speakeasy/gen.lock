@@ -3,28 +3,30 @@ id: 2ebfbbaa-03d2-4ef1-a2dd-71006dd37355
 management:
   docChecksum: 936f0ff0f6ac9e56df38e51b2591854f
   docVersion: 1.0.0
-  speakeasyVersion: 1.318.0
-  generationVersion: 2.352.0
-  releaseVersion: 0.0.2
-  configChecksum: 7f6c02390b2ea92d7195d91714d72cbb
+  speakeasyVersion: 1.344.0
+  generationVersion: 2.376.0
+  releaseVersion: 0.1.0
+  configChecksum: bbd82afc8dc426a9afe44497a7749d58
 features:
   python:
-    additionalDependencies: 0.1.0
-    callbacks: 0.1.0
-    core: 0.2.4
-    errors: 0.1.0
-    examples: 0.1.0
-    flattening: 0.1.0
-    globalSecurity: 0.1.0
-    globalSecurityCallbacks: 0.1.0
-    globalServerURLs: 0.1.0
-    inputOutputModels: 0.1.0
-    oauth2ClientCredentials: 0.1.0
-    responseFormat: 0.1.0
-    retries: 0.1.0
-    sdkHooks: 0.1.0
-    serverIDs: 0.1.0
-    webhooks: 0.1.0
+    additionalDependencies: 1.0.0
+    callbacks: 2.0.0
+    core: 5.1.6
+    defaultEnabledRetries: 0.2.0
+    envVarSecurityUsage: 0.2.0
+    errors: 3.0.0
+    examples: 3.0.0
+    flattening: 3.0.0
+    globalSecurity: 3.0.0
+    globalSecurityCallbacks: 1.0.0
+    globalServerURLs: 3.0.0
+    inputOutputModels: 3.0.0
+    oauth2ClientCredentials: 1.0.0
+    responseFormat: 1.0.0
+    retries: 3.0.0
+    sdkHooks: 1.0.0
+    serverIDs: 3.0.0
+    webhooks: 2.0.0
 generatedFiles:
   - src/speakeasy_bar_py/sdkconfiguration.py
   - src/speakeasy_bar_py/authentication.py
@@ -33,6 +35,7 @@ generatedFiles:
   - src/speakeasy_bar_py/orders.py
   - src/speakeasy_bar_py/config.py
   - src/speakeasy_bar_py/sdk.py
+  - .vscode/settings.json
   - py.typed
   - pylintrc
   - pyproject.toml
@@ -40,9 +43,11 @@ generatedFiles:
   - src/speakeasy_bar_py/__init__.py
   - src/speakeasy_bar_py/basesdk.py
   - src/speakeasy_bar_py/httpclient.py
+  - src/speakeasy_bar_py/py.typed
   - src/speakeasy_bar_py/types/__init__.py
   - src/speakeasy_bar_py/types/basemodel.py
   - src/speakeasy_bar_py/utils/__init__.py
+  - src/speakeasy_bar_py/utils/annotations.py
   - src/speakeasy_bar_py/utils/enums.py
   - src/speakeasy_bar_py/utils/eventstreaming.py
   - src/speakeasy_bar_py/utils/forms.py
@@ -62,6 +67,7 @@ generatedFiles:
   - src/speakeasy_bar_py/models/operations/listingredients.py
   - src/speakeasy_bar_py/models/operations/createorder.py
   - src/speakeasy_bar_py/models/operations/subscribetowebhooks.py
+  - src/speakeasy_bar_py/models/operations/__init__.py
   - src/speakeasy_bar_py/models/components/error.py
   - src/speakeasy_bar_py/models/components/httpmetadata.py
   - src/speakeasy_bar_py/models/components/drink.py
@@ -74,14 +80,12 @@ generatedFiles:
   - src/speakeasy_bar_py/models/components/ingredient.py
   - src/speakeasy_bar_py/models/components/ingredienttype.py
   - src/speakeasy_bar_py/models/components/drink_input.py
-  - src/speakeasy_bar_py/models/errors/apierror.py
-  - src/speakeasy_bar_py/models/callbacks/createorder.py
-  - src/speakeasy_bar_py/models/webhooks/stockupdate.py
-  - src/speakeasy_bar_py/models/__init__.py
-  - src/speakeasy_bar_py/models/errors/__init__.py
-  - src/speakeasy_bar_py/models/operations/__init__.py
   - src/speakeasy_bar_py/models/components/__init__.py
+  - src/speakeasy_bar_py/models/errors/apierror.py
+  - src/speakeasy_bar_py/models/errors/__init__.py
+  - src/speakeasy_bar_py/models/callbacks/createorder.py
   - src/speakeasy_bar_py/models/callbacks/__init__.py
+  - src/speakeasy_bar_py/models/webhooks/stockupdate.py
   - src/speakeasy_bar_py/models/webhooks/__init__.py
   - docs/models/operations/authenticaterequestbody.md
   - docs/models/operations/authenticateresponsebody.md
@@ -130,3 +134,4 @@ generatedFiles:
   - src/speakeasy_bar_py/_hooks/types.py
   - src/speakeasy_bar_py/_hooks/__init__.py
   - src/speakeasy_bar_py/_hooks/clientcredentials.py
+  - CONTRIBUTING.md

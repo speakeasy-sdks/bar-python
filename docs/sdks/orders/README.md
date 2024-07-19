@@ -16,12 +16,13 @@ Create an order for a drink.
 ### Example Usage
 
 ```python
+import os
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
 s = BarPython(
     security=components.Security(
-        api_key="<YOUR_API_KEY_HERE>",
+        api_key=os.getenv("API_KEY", ""),
     ),
 )
 
@@ -32,7 +33,7 @@ res = s.orders.create_order(request_body=[
         "product_code": "AC-A2DF3",
         "quantity": 138554,
     },
-], callback_url="<value>")
+])
 
 if res.order is not None:
     # handle response

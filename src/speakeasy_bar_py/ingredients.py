@@ -3,20 +3,21 @@
 from .basesdk import BaseSDK
 from speakeasy_bar_py._hooks import HookContext
 from speakeasy_bar_py.models import components, errors, operations
-from speakeasy_bar_py.types import Nullable, UNSET
+from speakeasy_bar_py.types import OptionalNullable, UNSET
 import speakeasy_bar_py.utils as utils
-from typing import List, Optional
+from typing import Any, List, Optional
 
 class Ingredients(BaseSDK):
     r"""The ingredients endpoints."""
     
     
     def list_ingredients(
-        self,
+        self, *,
         page: int,
         ingredients: Optional[List[str]] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
     ) -> operations.ListIngredientsResponse:
         r"""Get a list of ingredients.
 
@@ -26,10 +27,13 @@ class Ingredients(BaseSDK):
         :param ingredients: A list of ingredients to filter by. If not provided all ingredients will be returned.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param accept_header_override: Override the default accept header for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
         if server_url is not None:
             base_url = server_url
         
@@ -50,6 +54,7 @@ class Ingredients(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -71,46 +76,29 @@ class Ingredients(BaseSDK):
             retry_config=retry_config
         )
         
-        res = operations.ListIngredientsResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
-        
-        if http_res.status_code == 200:
-            # pylint: disable=no-else-return
-            if utils.match_content_type(http_res.headers.get("Content-Type") or "", "application/json"):                
-                out = utils.unmarshal_json(http_res.text, Optional[operations.ListIngredientsResponseBody])
-                res.object = out
-            else:
-                content_type = http_res.headers.get("Content-Type")
-                raise errors.SDKError(f"unknown content-type received: {content_type}", http_res.status_code, http_res.text, http_res)
-        elif http_res.status_code >= 400 and http_res.status_code < 500:
+        data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return operations.ListIngredientsResponse(object=utils.unmarshal_json(http_res.text, Optional[operations.ListIngredientsResponseBody]), http_meta=components.HTTPMetadata(request=req, response=http_res))
+        if utils.match_response(http_res, "4XX", "*"):
             raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        elif http_res.status_code >= 500 and http_res.status_code < 600:
-            # pylint: disable=no-else-return
-            if utils.match_content_type(http_res.headers.get("Content-Type") or "", "application/json"):                
-                data = utils.unmarshal_json(http_res.text, errors.APIErrorData)
-                out = errors.APIError(data=data)
-                  
-                raise out
-            else:
-                content_type = http_res.headers.get("Content-Type")
-                raise errors.SDKError(f"unknown content-type received: {content_type}", http_res.status_code, http_res.text, http_res)
-        else:
-            # pylint: disable=no-else-return
-            if utils.match_content_type(http_res.headers.get("Content-Type") or "", "application/json"):                
-                out = utils.unmarshal_json(http_res.text, Optional[components.Error])
-                res.error = out
-            else:
-                content_type = http_res.headers.get("Content-Type")
-                raise errors.SDKError(f"unknown content-type received: {content_type}", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, "5XX", "application/json"):
+            data = utils.unmarshal_json(http_res.text, errors.APIErrorData)
+            raise errors.APIError(data=data)
+        if utils.match_response(http_res, "default", "application/json"):
+            return operations.ListIngredientsResponse(error=utils.unmarshal_json(http_res.text, Optional[components.Error]), http_meta=components.HTTPMetadata(request=req, response=http_res))
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
 
-        return res
     
     
     async def list_ingredients_async(
-        self,
+        self, *,
         page: int,
         ingredients: Optional[List[str]] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
     ) -> operations.ListIngredientsResponse:
         r"""Get a list of ingredients.
 
@@ -120,10 +108,13 @@ class Ingredients(BaseSDK):
         :param ingredients: A list of ingredients to filter by. If not provided all ingredients will be returned.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param accept_header_override: Override the default accept header for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
         if server_url is not None:
             base_url = server_url
         
@@ -144,6 +135,7 @@ class Ingredients(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -165,36 +157,18 @@ class Ingredients(BaseSDK):
             retry_config=retry_config
         )
         
-        res = operations.ListIngredientsResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
-        
-        if http_res.status_code == 200:
-            # pylint: disable=no-else-return
-            if utils.match_content_type(http_res.headers.get("Content-Type") or "", "application/json"):                
-                out = utils.unmarshal_json(http_res.text, Optional[operations.ListIngredientsResponseBody])
-                res.object = out
-            else:
-                content_type = http_res.headers.get("Content-Type")
-                raise errors.SDKError(f"unknown content-type received: {content_type}", http_res.status_code, http_res.text, http_res)
-        elif http_res.status_code >= 400 and http_res.status_code < 500:
+        data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return operations.ListIngredientsResponse(object=utils.unmarshal_json(http_res.text, Optional[operations.ListIngredientsResponseBody]), http_meta=components.HTTPMetadata(request=req, response=http_res))
+        if utils.match_response(http_res, "4XX", "*"):
             raise errors.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        elif http_res.status_code >= 500 and http_res.status_code < 600:
-            # pylint: disable=no-else-return
-            if utils.match_content_type(http_res.headers.get("Content-Type") or "", "application/json"):                
-                data = utils.unmarshal_json(http_res.text, errors.APIErrorData)
-                out = errors.APIError(data=data)
-                  
-                raise out
-            else:
-                content_type = http_res.headers.get("Content-Type")
-                raise errors.SDKError(f"unknown content-type received: {content_type}", http_res.status_code, http_res.text, http_res)
-        else:
-            # pylint: disable=no-else-return
-            if utils.match_content_type(http_res.headers.get("Content-Type") or "", "application/json"):                
-                out = utils.unmarshal_json(http_res.text, Optional[components.Error])
-                res.error = out
-            else:
-                content_type = http_res.headers.get("Content-Type")
-                raise errors.SDKError(f"unknown content-type received: {content_type}", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, "5XX", "application/json"):
+            data = utils.unmarshal_json(http_res.text, errors.APIErrorData)
+            raise errors.APIError(data=data)
+        if utils.match_response(http_res, "default", "application/json"):
+            return operations.ListIngredientsResponse(error=utils.unmarshal_json(http_res.text, Optional[components.Error]), http_meta=components.HTTPMetadata(request=req, response=http_res))
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise errors.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
 
-        return res
     

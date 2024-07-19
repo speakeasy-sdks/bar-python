@@ -3,7 +3,13 @@
 import hashlib
 import httpx
 import time
-from .types import SDKInitHook, BeforeRequestContext, BeforeRequestHook, AfterErrorContext, AfterErrorHook
+from .types import (
+    SDKInitHook,
+    BeforeRequestContext,
+    BeforeRequestHook,
+    AfterErrorContext,
+    AfterErrorHook,
+)
 from typing import Any, Callable, Dict, List, Tuple, Union, Optional
 from urllib.parse import urlparse, urljoin
 from speakeasy_bar_py.httpclient import HttpClient
@@ -23,10 +29,16 @@ class Credentials:
 class Session:
     credentials: Credentials
     token: str
-    scopes: List[str]
+    scopes: Optional[List[str]] = None
     expires_at: Optional[int] = None
 
-    def __init__(self, credentials: Credentials, token: str, scopes: List[str], expires_at: Optional[int] = None):
+    def __init__(
+        self,
+        credentials: Credentials,
+        token: str,
+        scopes: Optional[List[str]] = None,
+        expires_at: Optional[int] = None,
+    ):
         self.credentials = credentials
         self.token = token
         self.scopes = scopes
@@ -44,7 +56,9 @@ class ClientCredentialsHook(SDKInitHook, BeforeRequestHook, AfterErrorHook):
 
         return base_url, client
 
-    def before_request(self, hook_ctx: BeforeRequestContext, request: httpx.Request) -> httpx.Request:
+    def before_request(
+        self, hook_ctx: BeforeRequestContext, request: httpx.Request
+    ) -> httpx.Request:
         if hook_ctx.oauth2_scopes is None:
             # OAuth2 not in use
             return request
@@ -54,11 +68,20 @@ class ClientCredentialsHook(SDKInitHook, BeforeRequestHook, AfterErrorHook):
             return request
 
         session_key = self.get_session_key(
-            credentials.client_id, credentials.client_secret)
+            credentials.client_id, credentials.client_secret
+        )
 
-        if session_key not in self.sessions or not self.has_required_scopes(self.sessions[session_key].scopes, hook_ctx.oauth2_scopes) or self.has_token_expired(self.sessions[session_key].expires_at):
-            sess = self.do_token_request(credentials, self.get_scopes(
-                hook_ctx.oauth2_scopes, self.sessions.get(session_key)))
+        if (
+            session_key not in self.sessions
+            or not self.has_required_scopes(
+                self.sessions[session_key].scopes, hook_ctx.oauth2_scopes
+            )
+            or self.has_token_expired(self.sessions[session_key].expires_at)
+        ):
+            sess = self.do_token_request(
+                credentials,
+                self.get_scopes(hook_ctx.oauth2_scopes, self.sessions.get(session_key)),
+            )
 
             self.sessions[session_key] = sess
 
@@ -66,7 +89,12 @@ class ClientCredentialsHook(SDKInitHook, BeforeRequestHook, AfterErrorHook):
 
         return request
 
-    def after_error(self, hook_ctx: AfterErrorContext, response: Optional[httpx.Response], error: Optional[Exception]) -> Union[Tuple[Optional[httpx.Response], Optional[Exception]], Exception]:
+    def after_error(
+        self,
+        hook_ctx: AfterErrorContext,
+        response: Optional[httpx.Response],
+        error: Optional[Exception],
+    ) -> Union[Tuple[Optional[httpx.Response], Optional[Exception]], Exception]:
         if hook_ctx.oauth2_scopes is None:
             # OAuth2 not in use
             return (response, error)
@@ -81,14 +109,17 @@ class ClientCredentialsHook(SDKInitHook, BeforeRequestHook, AfterErrorHook):
 
         if response is not None and response.status_code == 401:
             session_key = self.get_session_key(
-                credentials.client_id, credentials.client_secret)
+                credentials.client_id, credentials.client_secret
+            )
 
             if session_key in self.sessions:
                 del self.sessions[session_key]
 
         return (response, error)
 
-    def get_credentials(self, source: Optional[Union[Any, Callable[[], Any]]]) -> Optional[Credentials]:
+    def get_credentials(
+        self, source: Optional[Union[Any, Callable[[], Any]]]
+    ) -> Optional[Credentials]:
         if source is None:
             return None
 
@@ -103,7 +134,9 @@ class ClientCredentialsHook(SDKInitHook, BeforeRequestHook, AfterErrorHook):
             token_url=security.client_credentials.TOKEN_URL
         )
 
-    def do_token_request(self, credentials: Credentials, scopes: Optional[List[str]]) -> Session:
+    def do_token_request(
+        self, credentials: Credentials, scopes: Optional[List[str]]
+    ) -> Session:
         payload = {
             "grant_type": "client_credentials",
             "client_id": credentials.client_id,
@@ -117,11 +150,12 @@ class ClientCredentialsHook(SDKInitHook, BeforeRequestHook, AfterErrorHook):
         if not bool(urlparse(credentials.token_url).netloc):
             token_url = urljoin(self.base_url, credentials.token_url)
 
-        response = self.client.post(token_url, data=payload)
+        response = self.client.send(self.client.build_request(method="POST", url=token_url, data=payload))
 
         if response.status_code < 200 or response.status_code >= 300:
             raise Exception(
-                f"Unexpected status code {response.status_code} from token endpoint")
+                f"Unexpected status code {response.status_code} from token endpoint"
+            )
 
         response_data = response.json()
 
@@ -132,15 +166,27 @@ class ClientCredentialsHook(SDKInitHook, BeforeRequestHook, AfterErrorHook):
         if "expires_in" in response_data:
             expires_at = int(time.time()) + response_data.get("expires_in")
 
-        return Session(credentials=credentials, token=response_data.get("access_token"), scopes=scopes, expires_at=expires_at)
+        return Session(
+            credentials=credentials,
+            token=response_data.get("access_token"),
+            scopes=scopes,
+            expires_at=expires_at,
+        )
 
     def get_session_key(self, client_id: str, client_secret: str) -> str:
         return hashlib.md5(f"{client_id}:{client_secret}".encode()).hexdigest()
 
-    def has_required_scopes(self, scopes: List[str], required_scopes: List[str]) -> bool:
+    def has_required_scopes(
+        self, scopes: Optional[List[str]], required_scopes: List[str]
+    ) -> bool:
+        if scopes is None:
+            return False
+
         return all(scope in scopes for scope in required_scopes)
 
-    def get_scopes(self, required_scopes: List[str], sess: Optional[Session]) -> List[str]:
+    def get_scopes(
+        self, required_scopes: List[str], sess: Optional[Session]
+    ) -> List[str]:
         scopes = required_scopes.copy()
         if sess is not None and sess.scopes is not None:
             scopes.extend(sess.scopes)
@@ -148,4 +194,4 @@ class ClientCredentialsHook(SDKInitHook, BeforeRequestHook, AfterErrorHook):
         return scopes
 
     def has_token_expired(self, expires_at: Optional[int]) -> bool:
-        return expires_at is None or time.time()+60 >= expires_at
+        return expires_at is None or time.time() + 60 >= expires_at

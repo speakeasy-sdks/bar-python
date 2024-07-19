@@ -15,7 +15,6 @@ class Status(str, Enum):
     PROCESSING = "processing"
     COMPLETE = "complete"
 
-
 class OrderTypedDict(TypedDict):
     r"""An order for a drink or ingredient."""
     

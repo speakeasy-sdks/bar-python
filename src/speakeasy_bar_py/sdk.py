@@ -12,7 +12,7 @@ from speakeasy_bar_py.drinks import Drinks
 from speakeasy_bar_py.ingredients import Ingredients
 from speakeasy_bar_py.models import components
 from speakeasy_bar_py.orders import Orders
-from speakeasy_bar_py.types import Nullable, UNSET
+from speakeasy_bar_py.types import OptionalNullable, UNSET
 import speakeasy_bar_py.utils as utils
 from typing import Callable, Dict, Optional, Union
 
@@ -41,7 +41,8 @@ class BarPython(BaseSDK):
         url_params: Optional[Dict[str, str]] = None,
         client: Optional[HttpClient] = None,
         async_client: Optional[AsyncHttpClient] = None,
-        retry_config: Optional[Nullable[RetryConfig]] = UNSET
+        retry_config: OptionalNullable[RetryConfig] = UNSET,
+        timeout_ms: Optional[int] = None
     ) -> None:
         r"""Instantiates the SDK configuring it with the provided parameters.
 
@@ -54,6 +55,7 @@ class BarPython(BaseSDK):
         :param client: The HTTP client to use for all synchronous methods
         :param async_client: The Async HTTP client to use for all asynchronous methods
         :param retry_config: The retry configuration to use for all supported methods
+        :param timeout_ms: Optional request timeout applied to each operation in milliseconds
         """
         if client is None:
             client = httpx.Client()
@@ -92,7 +94,8 @@ class BarPython(BaseSDK):
             server_url=server_url,
             server=server,
             server_defaults=server_defaults,
-            retry_config=retry_config
+            retry_config=retry_config,
+            timeout_ms=timeout_ms
         ))
 
         hooks = SDKHooks()
