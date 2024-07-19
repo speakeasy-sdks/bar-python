@@ -9,3 +9,7 @@ targets:
     my-first-target:
         target: python
         source: bar-openapi
+        codeSamples:
+            output: codeSamples.yaml
+            registry:
+                location: registry.speakeasyapi.dev/speakeasy-bar-test/speakeasy-bar-test/code-samples-python-my-first-target
