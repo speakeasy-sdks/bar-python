@@ -14,9 +14,8 @@ generation:
 python:
   version: 0.0.2
   additionalDependencies:
-    dependencies: {}
-    extraDependencies:
-      dev: {}
+    dev: {}
+    main: {}
   author: Speakeasy
   authors:
     - Speakeasy
