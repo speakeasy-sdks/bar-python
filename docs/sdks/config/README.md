@@ -12,13 +12,12 @@ Subscribe to webhooks.
 ### Example Usage
 
 ```python
-import os
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
 s = BarPython(
     security=components.Security(
-        api_key=os.getenv("API_KEY", ""),
+        api_key="<YOUR_API_KEY_HERE>",
     ),
 )
 
