@@ -3,23 +3,23 @@ id: 2ebfbbaa-03d2-4ef1-a2dd-71006dd37355
 management:
   docChecksum: 936f0ff0f6ac9e56df38e51b2591854f
   docVersion: 1.0.0
-  speakeasyVersion: 1.344.1
-  generationVersion: 2.376.2
-  releaseVersion: 0.1.1
-  configChecksum: 63ea61d919f81649dc5854846c31d0aa
+  speakeasyVersion: 1.358.0
+  generationVersion: 2.390.6
+  releaseVersion: 0.2.0
+  configChecksum: b191e5ba64b72acfb48916e89c615b8f
   repoURL: https://github.com/speakeasy-sdks/bar-python.git
   installationURL: https://github.com/speakeasy-sdks/bar-python.git
 features:
   python:
     additionalDependencies: 1.0.0
     callbacks: 2.0.0
-    core: 5.1.6
+    core: 5.3.7
     defaultEnabledRetries: 0.2.0
-    envVarSecurityUsage: 0.2.0
+    envVarSecurityUsage: 0.3.1
     errors: 3.0.0
     examples: 3.0.0
     flattening: 3.0.0
-    globalSecurity: 3.0.0
+    globalSecurity: 3.0.2
     globalSecurityCallbacks: 1.0.0
     globalServerURLs: 3.0.0
     inputOutputModels: 3.0.0
@@ -38,9 +38,12 @@ generatedFiles:
   - src/speakeasy_bar_py/config.py
   - src/speakeasy_bar_py/sdk.py
   - .vscode/settings.json
+  - poetry.toml
   - py.typed
   - pylintrc
   - pyproject.toml
+  - scripts/compile.sh
+  - scripts/prepare-readme.py
   - scripts/publish.sh
   - src/speakeasy_bar_py/__init__.py
   - src/speakeasy_bar_py/basesdk.py
@@ -54,6 +57,7 @@ generatedFiles:
   - src/speakeasy_bar_py/utils/eventstreaming.py
   - src/speakeasy_bar_py/utils/forms.py
   - src/speakeasy_bar_py/utils/headers.py
+  - src/speakeasy_bar_py/utils/logger.py
   - src/speakeasy_bar_py/utils/metadata.py
   - src/speakeasy_bar_py/utils/queryparams.py
   - src/speakeasy_bar_py/utils/requestbodies.py

@@ -1,13 +1,12 @@
 <!-- Start SDK Example Usage [usage] -->
 ```python
 # Synchronous Example
-import os
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
 s = BarPython(
     security=components.Security(
-        api_key=os.getenv("API_KEY", ""),
+        api_key="<YOUR_API_KEY_HERE>",
     ),
 )
 
@@ -25,14 +24,13 @@ The same SDK client can also be used to make asychronous requests by importing a
 ```python
 # Asynchronous Example
 import asyncio
-import os
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
 async def main():
     s = BarPython(
         security=components.Security(
-            api_key=os.getenv("API_KEY", ""),
+            api_key="<YOUR_API_KEY_HERE>",
         ),
     )
     res = await s.drinks.list_drinks_async()
@@ -45,13 +43,12 @@ asyncio.run(main())
 
 ```python
 # Synchronous Example
-import os
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
 s = BarPython(
     security=components.Security(
-        api_key=os.getenv("API_KEY", ""),
+        api_key="<YOUR_API_KEY_HERE>",
     ),
 )
 
@@ -75,14 +72,13 @@ The same SDK client can also be used to make asychronous requests by importing a
 ```python
 # Asynchronous Example
 import asyncio
-import os
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
 async def main():
     s = BarPython(
         security=components.Security(
-            api_key=os.getenv("API_KEY", ""),
+            api_key="<YOUR_API_KEY_HERE>",
         ),
     )
     res = await s.orders.create_order_async(request_body=[

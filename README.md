@@ -37,13 +37,12 @@ poetry add git+https://github.com/speakeasy-sdks/bar-python.git
 
 ```python
 # Synchronous Example
-import os
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
 s = BarPython(
     security=components.Security(
-        api_key=os.getenv("API_KEY", ""),
+        api_key="<YOUR_API_KEY_HERE>",
     ),
 )
 
@@ -61,14 +60,13 @@ The same SDK client can also be used to make asychronous requests by importing a
 ```python
 # Asynchronous Example
 import asyncio
-import os
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
 async def main():
     s = BarPython(
         security=components.Security(
-            api_key=os.getenv("API_KEY", ""),
+            api_key="<YOUR_API_KEY_HERE>",
         ),
     )
     res = await s.drinks.list_drinks_async()
@@ -83,13 +81,12 @@ asyncio.run(main())
 
 ```python
 # Synchronous Example
-import os
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
 s = BarPython(
     security=components.Security(
-        api_key=os.getenv("API_KEY", ""),
+        api_key="<YOUR_API_KEY_HERE>",
     ),
 )
 
@@ -113,14 +110,13 @@ The same SDK client can also be used to make asychronous requests by importing a
 ```python
 # Asynchronous Example
 import asyncio
-import os
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
 async def main():
     s = BarPython(
         security=components.Security(
-            api_key=os.getenv("API_KEY", ""),
+            api_key="<YOUR_API_KEY_HERE>",
         ),
     )
     res = await s.orders.create_order_async(request_body=[
@@ -392,13 +388,12 @@ This SDK supports the following security schemes globally:
 
 You can set the security parameters through the `security` optional parameter when initializing the SDK client instance. The selected scheme will be used by default to authenticate with the API for all operations that support it. For example:
 ```python
-import os
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
 s = BarPython(
     security=components.Security(
-        api_key=os.getenv("API_KEY", ""),
+        api_key="<YOUR_API_KEY_HERE>",
     ),
 )
 
@@ -411,6 +406,30 @@ if res.object is not None:
 
 ```
 <!-- End Authentication [security] -->
+
+<!-- Start IDE Support [idesupport] -->
+## IDE Support
+
+### PyCharm
+
+Generally, the SDK will work well with most IDEs out of the box. However, when using PyCharm, you can enjoy much better integration with Pydantic by installing an additional plugin.
+
+- [PyCharm Pydantic Plugin](https://docs.pydantic.dev/latest/integrations/pycharm/)
+<!-- End IDE Support [idesupport] -->
+
+<!-- Start Debugging [debug] -->
+## Debugging
+
+To emit debug logs for SDK requests and responses you can pass a logger object directly into your SDK object.
+
+```python
+from speakeasy_bar_py import BarPython
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+s = BarPython(debug_logger=logging.getLogger("speakeasy_bar_py"))
+```
+<!-- End Debugging [debug] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
 
