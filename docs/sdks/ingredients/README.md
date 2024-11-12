@@ -16,16 +16,14 @@ Get a list of ingredients, if authenticated this will include stock levels and p
 ### Example Usage
 
 ```python
-import os
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
 s = BarPython(
     security=components.Security(
-        api_key=os.getenv("API_KEY", ""),
+        api_key="<YOUR_API_KEY_HERE>",
     ),
 )
-
 
 res = s.ingredients.list_ingredients(page=347327)
 
@@ -43,13 +41,13 @@ if res.object is not None:
 | `ingredients`                                                                         | List[*str*]                                                                           | :heavy_minus_sign:                                                                    | A list of ingredients to filter by. If not provided all ingredients will be returned. |
 | `retries`                                                                             | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                      | :heavy_minus_sign:                                                                    | Configuration to override the default retry behavior of the client.                   |
 
-
 ### Response
 
 **[operations.ListIngredientsResponse](../../models/operations/listingredientsresponse.md)**
+
 ### Errors
 
-| Error Object     | Status Code      | Content Type     |
+| Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
 | errors.APIError  | 5XX              | application/json |
-| errors.SDKError  | 4xx-5xx          | */*              |
+| errors.SDKError  | 4XX              | \*/\*            |

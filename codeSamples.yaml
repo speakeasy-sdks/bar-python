@@ -2,4 +2,132 @@ overlay: 1.0.0
 info:
   title: CodeSamples overlay for python target
   version: 0.0.0
-actions: []
+actions:
+  - target: $["paths"]["/authenticate"]["post"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: authenticate
+          source: |-
+            from speakeasy_bar_py import BarPython
+
+            s = BarPython()
+
+            res = s.authentication.authenticate(request={})
+
+            if res.object is not None:
+                # handle response
+                pass
+  - target: $["paths"]["/drink/{name}"]["get"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: getDrink
+          source: |-
+            from speakeasy_bar_py import BarPython
+            from speakeasy_bar_py.models import components
+
+            s = BarPython(
+                security=components.Security(
+                    api_key="<YOUR_API_KEY_HERE>",
+                ),
+            )
+
+            res = s.drinks.get_drink(name="<value>")
+
+            if res.drink is not None:
+                # handle response
+                pass
+  - target: $["paths"]["/drinks"]["get"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: listDrinks
+          source: |-
+            from speakeasy_bar_py import BarPython
+            from speakeasy_bar_py.models import components
+
+            s = BarPython(
+                security=components.Security(
+                    api_key="<YOUR_API_KEY_HERE>",
+                ),
+            )
+
+            res = s.drinks.list_drinks()
+
+            if res.drinks is not None:
+                # handle response
+                pass
+  - target: $["paths"]["/ingredients"]["get"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: listIngredients
+          source: |-
+            from speakeasy_bar_py import BarPython
+            from speakeasy_bar_py.models import components
+
+            s = BarPython(
+                security=components.Security(
+                    api_key="<YOUR_API_KEY_HERE>",
+                ),
+            )
+
+            res = s.ingredients.list_ingredients(page=347327)
+
+            if res.object is not None:
+                # handle response
+                pass
+  - target: $["paths"]["/order"]["post"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: createOrder
+          source: |-
+            from speakeasy_bar_py import BarPython
+            from speakeasy_bar_py.models import components
+
+            s = BarPython(
+                security=components.Security(
+                    api_key="<YOUR_API_KEY_HERE>",
+                ),
+            )
+
+            res = s.orders.create_order(request_body=[
+                {
+                    "type": components.OrderType.DRINK,
+                    "product_code": "NAC-3F2D1",
+                    "quantity": 837978,
+                },
+                {
+                    "type": components.OrderType.DRINK,
+                    "product_code": "NAC-3F2D1",
+                    "quantity": 589796,
+                },
+            ])
+
+            if res.order is not None:
+                # handle response
+                pass
+  - target: $["paths"]["/webhooks/subscribe"]["post"]
+    update:
+      x-codeSamples:
+        - lang: python
+          label: subscribeToWebhooks
+          source: |-
+            from speakeasy_bar_py import BarPython
+            from speakeasy_bar_py.models import components
+
+            s = BarPython(
+                security=components.Security(
+                    api_key="<YOUR_API_KEY_HERE>",
+                ),
+            )
+
+            res = s.config.subscribe_to_webhooks(request=[
+                {},
+            ])
+
+            if res is not None:
+                # handle response
+                pass

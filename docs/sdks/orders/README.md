@@ -16,22 +16,25 @@ Create an order for a drink.
 ### Example Usage
 
 ```python
-import os
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
 s = BarPython(
     security=components.Security(
-        api_key=os.getenv("API_KEY", ""),
+        api_key="<YOUR_API_KEY_HERE>",
     ),
 )
 
-
 res = s.orders.create_order(request_body=[
     {
-        "type": components.OrderType.INGREDIENT,
-        "product_code": "AC-A2DF3",
-        "quantity": 138554,
+        "type": components.OrderType.DRINK,
+        "product_code": "NAC-3F2D1",
+        "quantity": 837978,
+    },
+    {
+        "type": components.OrderType.DRINK,
+        "product_code": "NAC-3F2D1",
+        "quantity": 589796,
     },
 ])
 
@@ -49,13 +52,13 @@ if res.order is not None:
 | `callback_url`                                                       | *Optional[str]*                                                      | :heavy_minus_sign:                                                   | The url to call when the order is updated.                           |
 | `retries`                                                            | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)     | :heavy_minus_sign:                                                   | Configuration to override the default retry behavior of the client.  |
 
-
 ### Response
 
 **[operations.CreateOrderResponse](../../models/operations/createorderresponse.md)**
+
 ### Errors
 
-| Error Object     | Status Code      | Content Type     |
+| Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
 | errors.APIError  | 5XX              | application/json |
-| errors.SDKError  | 4xx-5xx          | */*              |
+| errors.SDKError  | 4XX              | \*/\*            |

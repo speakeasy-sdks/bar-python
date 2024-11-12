@@ -16,19 +16,62 @@ It has been generated successfully based on your OpenAPI spec. However, it is no
 - [ ] 🎁 Publish your SDK to package managers by [configuring automatic publishing](https://www.speakeasyapi.dev/docs/advanced-setup/publish-sdks)
 - [ ] ✨ When ready to productionize, delete this section from the README
 
+<!-- Start Summary [summary] -->
+## Summary
+
+The Speakeasy Bar: A bar that serves drinks.
+
+A secret underground bar that serves drinks to those in the know.
+
+For more information about the API: [The Speakeasy Bar Documentation.](https://docs.speakeasy.bar)
+<!-- End Summary [summary] -->
+
+<!-- Start Table of Contents [toc] -->
+## Table of Contents
+
+* [SDK Installation](#sdk-installation)
+* [IDE Support](#ide-support)
+* [SDK Example Usage](#sdk-example-usage)
+* [Available Resources and Operations](#available-resources-and-operations)
+* [Retries](#retries)
+* [Error Handling](#error-handling)
+* [Server Selection](#server-selection)
+* [Custom HTTP Client](#custom-http-client)
+* [Authentication](#authentication)
+* [Debugging](#debugging)
+<!-- End Table of Contents [toc] -->
+
 <!-- Start SDK Installation [installation] -->
 ## SDK Installation
 
-PIP
+The SDK can be installed with either *pip* or *poetry* package managers.
+
+### PIP
+
+*PIP* is the default package installer for Python, enabling easy installation and management of packages from PyPI via the command line.
+
 ```bash
 pip install git+https://github.com/speakeasy-sdks/bar-python.git
 ```
 
-Poetry
+### Poetry
+
+*Poetry* is a modern tool that simplifies dependency management and package publishing by using a single `pyproject.toml` file to handle project metadata and dependencies.
+
 ```bash
 poetry add git+https://github.com/speakeasy-sdks/bar-python.git
 ```
 <!-- End SDK Installation [installation] -->
+
+<!-- Start IDE Support [idesupport] -->
+## IDE Support
+
+### PyCharm
+
+Generally, the SDK will work well with most IDEs out of the box. However, when using PyCharm, you can enjoy much better integration with Pydantic by installing an additional plugin.
+
+- [PyCharm Pydantic Plugin](https://docs.pydantic.dev/latest/integrations/pycharm/)
+<!-- End IDE Support [idesupport] -->
 
 <!-- Start SDK Example Usage [usage] -->
 ## SDK Example Usage
@@ -37,16 +80,14 @@ poetry add git+https://github.com/speakeasy-sdks/bar-python.git
 
 ```python
 # Synchronous Example
-import os
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
 s = BarPython(
     security=components.Security(
-        api_key=os.getenv("API_KEY", ""),
+        api_key="<YOUR_API_KEY_HERE>",
     ),
 )
-
 
 res = s.drinks.list_drinks()
 
@@ -61,14 +102,13 @@ The same SDK client can also be used to make asychronous requests by importing a
 ```python
 # Asynchronous Example
 import asyncio
-import os
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
 async def main():
     s = BarPython(
         security=components.Security(
-            api_key=os.getenv("API_KEY", ""),
+            api_key="<YOUR_API_KEY_HERE>",
         ),
     )
     res = await s.drinks.list_drinks_async()
@@ -83,22 +123,25 @@ asyncio.run(main())
 
 ```python
 # Synchronous Example
-import os
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
 s = BarPython(
     security=components.Security(
-        api_key=os.getenv("API_KEY", ""),
+        api_key="<YOUR_API_KEY_HERE>",
     ),
 )
 
-
 res = s.orders.create_order(request_body=[
     {
-        "type": components.OrderType.INGREDIENT,
-        "product_code": "AC-A2DF3",
-        "quantity": 138554,
+        "type": components.OrderType.DRINK,
+        "product_code": "NAC-3F2D1",
+        "quantity": 837978,
+    },
+    {
+        "type": components.OrderType.DRINK,
+        "product_code": "NAC-3F2D1",
+        "quantity": 589796,
     },
 ])
 
@@ -113,21 +156,25 @@ The same SDK client can also be used to make asychronous requests by importing a
 ```python
 # Asynchronous Example
 import asyncio
-import os
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
 async def main():
     s = BarPython(
         security=components.Security(
-            api_key=os.getenv("API_KEY", ""),
+            api_key="<YOUR_API_KEY_HERE>",
         ),
     )
     res = await s.orders.create_order_async(request_body=[
         {
             "type": components.OrderType.DRINK,
             "product_code": "NAC-3F2D1",
-            "quantity": 547214,
+            "quantity": 837978,
+        },
+        {
+            "type": components.OrderType.DRINK,
+            "product_code": "NAC-3F2D1",
+            "quantity": 589796,
         },
     ])
     if res.order is not None:
@@ -141,9 +188,17 @@ asyncio.run(main())
 <!-- Start Available Resources and Operations [operations] -->
 ## Available Resources and Operations
 
+<details open>
+<summary>Available methods</summary>
+
 ### [authentication](docs/sdks/authentication/README.md)
 
 * [authenticate](docs/sdks/authentication/README.md#authenticate) - Authenticate with the API by providing a username and password.
+
+
+### [config](docs/sdks/config/README.md)
+
+* [subscribe_to_webhooks](docs/sdks/config/README.md#subscribe_to_webhooks) - Subscribe to webhooks.
 
 ### [drinks](docs/sdks/drinks/README.md)
 
@@ -158,9 +213,7 @@ asyncio.run(main())
 
 * [create_order](docs/sdks/orders/README.md#create_order) - Create an order.
 
-### [config](docs/sdks/config/README.md)
-
-* [subscribe_to_webhooks](docs/sdks/config/README.md#subscribe_to_webhooks) - Subscribe to webhooks.
+</details>
 <!-- End Available Resources and Operations [operations] -->
 
 <!-- Start Retries [retries] -->
@@ -174,7 +227,6 @@ from barpython.utils import BackoffStrategy, RetryConfig
 from speakeasy_bar_py import BarPython
 
 s = BarPython()
-
 
 res = s.authentication.authenticate(request={},
     RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
@@ -194,7 +246,6 @@ s = BarPython(
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
 )
 
-
 res = s.authentication.authenticate(request={})
 
 if res.object is not None:
@@ -207,12 +258,23 @@ if res.object is not None:
 <!-- Start Error Handling [errors] -->
 ## Error Handling
 
-Handling errors in this SDK should largely match your expectations.  All operations return a response object or raise an error.  If Error objects are specified in your OpenAPI Spec, the SDK will raise the appropriate Error type.
+Handling errors in this SDK should largely match your expectations. All operations return a response object or raise an exception.
 
-| Error Object     | Status Code      | Content Type     |
-| ---------------- | ---------------- | ---------------- |
-| errors.APIError  | 5XX              | application/json |
-| errors.SDKError  | 4xx-5xx          | */*              |
+By default, an API error will raise a errors.SDKError exception, which has the following properties:
+
+| Property        | Type             | Description           |
+|-----------------|------------------|-----------------------|
+| `.status_code`  | *int*            | The HTTP status code  |
+| `.message`      | *str*            | The error message     |
+| `.raw_response` | *httpx.Response* | The raw HTTP response |
+| `.body`         | *str*            | The response content  |
+
+When custom error responses are specified for an operation, the SDK may also raise their associated exceptions. You can refer to respective *Errors* tables in SDK docs for more details on possible exception types for each operation. For example, the `authenticate_async` method may raise the following exceptions:
+
+| Error Type      | Status Code | Content Type     |
+| --------------- | ----------- | ---------------- |
+| errors.APIError | 5XX         | application/json |
+| errors.SDKError | 4XX         | \*/\*            |
 
 ### Example
 
@@ -226,17 +288,16 @@ res = None
 try:
     res = s.authentication.authenticate(request={})
 
+    if res.object is not None:
+        # handle response
+        pass
+
 except errors.APIError as e:
-    # handle exception
+    # handle e.data: errors.APIErrorData
     raise(e)
 except errors.SDKError as e:
     # handle exception
     raise(e)
-
-if res.object is not None:
-    # handle response
-    pass
-
 ```
 <!-- End Error Handling [errors] -->
 
@@ -247,11 +308,13 @@ if res.object is not None:
 
 You can override the default server globally by passing a server name to the `server: str` optional parameter when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the names associated with the available servers:
 
-| Name | Server | Variables |
-| ----- | ------ | --------- |
-| `prod` | `https://speakeasy.bar` | None |
-| `staging` | `https://staging.speakeasy.bar` | None |
-| `customer` | `https://{organization}.{environment}.speakeasy.bar` | `organization` (default is `api`), `environment` (default is `prod`) |
+| Name       | Server                                               | Variables                                                       | Default values       |
+| ---------- | ---------------------------------------------------- | --------------------------------------------------------------- | -------------------- |
+| `prod`     | `https://speakeasy.bar`                              |                                                                 |                      |
+| `staging`  | `https://staging.speakeasy.bar`                      |                                                                 |                      |
+| `customer` | `https://{organization}.{environment}.speakeasy.bar` | `organization: str`<br/>`environment: models.ServerEnvironment` | `"api"`<br/>`"prod"` |
+
+If the selected server has variables, you may override their default values through the additional parameters made available in the SDK constructor.
 
 #### Example
 
@@ -262,7 +325,6 @@ s = BarPython(
     server="customer",
 )
 
-
 res = s.authentication.authenticate(request={})
 
 if res.object is not None:
@@ -270,12 +332,6 @@ if res.object is not None:
     pass
 
 ```
-
-#### Variables
-
-Some of the server options above contain variables. If you want to set the values of those variables, the following optional parameters are available when initializing the SDK client instance:
- * `organization: str`
- * `environment: models.ServerEnvironment`
 
 ### Override Server URL Per-Client
 
@@ -286,7 +342,6 @@ from speakeasy_bar_py import BarPython
 s = BarPython(
     server_url="https://speakeasy.bar",
 )
-
 
 res = s.authentication.authenticate(request={})
 
@@ -385,23 +440,21 @@ s = BarPython(async_client=CustomClient(httpx.AsyncClient()))
 
 This SDK supports the following security schemes globally:
 
-| Name                 | Type                 | Scheme               |
-| -------------------- | -------------------- | -------------------- |
-| `api_key`            | apiKey               | API key              |
-| `client_credentials` | oauth2               | OAuth2 token         |
+| Name                 | Type   | Scheme       |
+| -------------------- | ------ | ------------ |
+| `api_key`            | apiKey | API key      |
+| `client_credentials` | oauth2 | OAuth2 token |
 
 You can set the security parameters through the `security` optional parameter when initializing the SDK client instance. The selected scheme will be used by default to authenticate with the API for all operations that support it. For example:
 ```python
-import os
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
 s = BarPython(
     security=components.Security(
-        api_key=os.getenv("API_KEY", ""),
+        api_key="<YOUR_API_KEY_HERE>",
     ),
 )
-
 
 res = s.authentication.authenticate(request={})
 
@@ -411,6 +464,21 @@ if res.object is not None:
 
 ```
 <!-- End Authentication [security] -->
+
+<!-- Start Debugging [debug] -->
+## Debugging
+
+You can setup your SDK to emit debug logs for SDK requests and responses.
+
+You can pass your own logger class directly into your SDK.
+```python
+from speakeasy_bar_py import BarPython
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+s = BarPython(debug_logger=logging.getLogger("speakeasy_bar_py"))
+```
+<!-- End Debugging [debug] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
 
