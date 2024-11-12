@@ -3,49 +3,130 @@ id: 2ebfbbaa-03d2-4ef1-a2dd-71006dd37355
 management:
   docChecksum: 936f0ff0f6ac9e56df38e51b2591854f
   docVersion: 1.0.0
-  speakeasyVersion: 1.344.1
-  generationVersion: 2.376.2
-  releaseVersion: 0.1.1
-  configChecksum: 63ea61d919f81649dc5854846c31d0aa
+  speakeasyVersion: 1.438.1
+  generationVersion: 2.457.2
+  releaseVersion: 0.2.0
+  configChecksum: c73f2eded01903016cef9c24fdf93870
   repoURL: https://github.com/speakeasy-sdks/bar-python.git
   installationURL: https://github.com/speakeasy-sdks/bar-python.git
 features:
   python:
     additionalDependencies: 1.0.0
     callbacks: 2.0.0
-    core: 5.1.6
+    core: 5.6.4
     defaultEnabledRetries: 0.2.0
-    envVarSecurityUsage: 0.2.0
-    errors: 3.0.0
+    enumUnions: 0.1.0
+    envVarSecurityUsage: 0.3.2
+    errors: 3.2.0
     examples: 3.0.0
-    flattening: 3.0.0
-    globalSecurity: 3.0.0
+    flattening: 3.1.0
+    globalSecurity: 3.0.2
     globalSecurityCallbacks: 1.0.0
     globalServerURLs: 3.0.0
     inputOutputModels: 3.0.0
-    oauth2ClientCredentials: 1.0.0
-    responseFormat: 1.0.0
-    retries: 3.0.0
+    oauth2ClientCredentials: 1.1.0
+    responseFormat: 1.0.1
+    retries: 3.0.2
     sdkHooks: 1.0.0
     serverIDs: 3.0.0
+    tests: 1.6.0
     webhooks: 2.0.0
 generatedFiles:
-  - src/speakeasy_bar_py/sdkconfiguration.py
-  - src/speakeasy_bar_py/authentication.py
-  - src/speakeasy_bar_py/drinks.py
-  - src/speakeasy_bar_py/ingredients.py
-  - src/speakeasy_bar_py/orders.py
-  - src/speakeasy_bar_py/config.py
-  - src/speakeasy_bar_py/sdk.py
+  - .gitattributes
+  - .python-version
   - .vscode/settings.json
+  - CONTRIBUTING.md
+  - USAGE.md
+  - docs/models/callbacks/createorderorderupdaterequestbody.md
+  - docs/models/callbacks/createorderorderupdateresponse.md
+  - docs/models/components/drink.md
+  - docs/models/components/drinkinput.md
+  - docs/models/components/drinktype.md
+  - docs/models/components/error.md
+  - docs/models/components/httpmetadata.md
+  - docs/models/components/ingredient.md
+  - docs/models/components/ingredienttype.md
+  - docs/models/components/order.md
+  - docs/models/components/orderinput.md
+  - docs/models/components/ordertype.md
+  - docs/models/components/schemeclientcredentials.md
+  - docs/models/components/security.md
+  - docs/models/components/status.md
+  - docs/models/errors/apierror.md
+  - docs/models/operations/authenticaterequestbody.md
+  - docs/models/operations/authenticateresponse.md
+  - docs/models/operations/authenticateresponsebody.md
+  - docs/models/operations/createorderrequest.md
+  - docs/models/operations/createorderresponse.md
+  - docs/models/operations/data.md
+  - docs/models/operations/getdrinkrequest.md
+  - docs/models/operations/getdrinkresponse.md
+  - docs/models/operations/listdrinksrequest.md
+  - docs/models/operations/listdrinksresponse.md
+  - docs/models/operations/listingredientsrequest.md
+  - docs/models/operations/listingredientsresponse.md
+  - docs/models/operations/listingredientsresponsebody.md
+  - docs/models/operations/requestbody.md
+  - docs/models/operations/subscribetowebhooksresponse.md
+  - docs/models/operations/webhook.md
+  - docs/models/utils/retryconfig.md
+  - docs/models/webhooks/stockupdaterequestbody.md
+  - docs/models/webhooks/stockupdateresponse.md
+  - docs/sdks/authentication/README.md
+  - docs/sdks/barpython/README.md
+  - docs/sdks/config/README.md
+  - docs/sdks/drinks/README.md
+  - docs/sdks/ingredients/README.md
+  - docs/sdks/orders/README.md
+  - poetry.toml
   - py.typed
   - pylintrc
   - pyproject.toml
+  - scripts/prepare-readme.py
   - scripts/publish.sh
   - src/speakeasy_bar_py/__init__.py
+  - src/speakeasy_bar_py/_hooks/__init__.py
+  - src/speakeasy_bar_py/_hooks/clientcredentials.py
+  - src/speakeasy_bar_py/_hooks/sdkhooks.py
+  - src/speakeasy_bar_py/_hooks/types.py
+  - src/speakeasy_bar_py/_version.py
+  - src/speakeasy_bar_py/authentication.py
   - src/speakeasy_bar_py/basesdk.py
+  - src/speakeasy_bar_py/config.py
+  - src/speakeasy_bar_py/drinks.py
   - src/speakeasy_bar_py/httpclient.py
+  - src/speakeasy_bar_py/ingredients.py
+  - src/speakeasy_bar_py/models/callbacks/__init__.py
+  - src/speakeasy_bar_py/models/callbacks/createorder.py
+  - src/speakeasy_bar_py/models/components/__init__.py
+  - src/speakeasy_bar_py/models/components/drink.py
+  - src/speakeasy_bar_py/models/components/drink_input.py
+  - src/speakeasy_bar_py/models/components/drinktype.py
+  - src/speakeasy_bar_py/models/components/error.py
+  - src/speakeasy_bar_py/models/components/httpmetadata.py
+  - src/speakeasy_bar_py/models/components/ingredient.py
+  - src/speakeasy_bar_py/models/components/ingredienttype.py
+  - src/speakeasy_bar_py/models/components/order.py
+  - src/speakeasy_bar_py/models/components/order_input.py
+  - src/speakeasy_bar_py/models/components/ordertype.py
+  - src/speakeasy_bar_py/models/components/schemeclientcredentials.py
+  - src/speakeasy_bar_py/models/components/security.py
+  - src/speakeasy_bar_py/models/errors/__init__.py
+  - src/speakeasy_bar_py/models/errors/apierror.py
+  - src/speakeasy_bar_py/models/errors/sdkerror.py
+  - src/speakeasy_bar_py/models/operations/__init__.py
+  - src/speakeasy_bar_py/models/operations/authenticate.py
+  - src/speakeasy_bar_py/models/operations/createorder.py
+  - src/speakeasy_bar_py/models/operations/getdrink.py
+  - src/speakeasy_bar_py/models/operations/listdrinks.py
+  - src/speakeasy_bar_py/models/operations/listingredients.py
+  - src/speakeasy_bar_py/models/operations/subscribetowebhooks.py
+  - src/speakeasy_bar_py/models/webhooks/__init__.py
+  - src/speakeasy_bar_py/models/webhooks/stockupdate.py
+  - src/speakeasy_bar_py/orders.py
   - src/speakeasy_bar_py/py.typed
+  - src/speakeasy_bar_py/sdk.py
+  - src/speakeasy_bar_py/sdkconfiguration.py
   - src/speakeasy_bar_py/types/__init__.py
   - src/speakeasy_bar_py/types/basemodel.py
   - src/speakeasy_bar_py/utils/__init__.py
@@ -54,6 +135,7 @@ generatedFiles:
   - src/speakeasy_bar_py/utils/eventstreaming.py
   - src/speakeasy_bar_py/utils/forms.py
   - src/speakeasy_bar_py/utils/headers.py
+  - src/speakeasy_bar_py/utils/logger.py
   - src/speakeasy_bar_py/utils/metadata.py
   - src/speakeasy_bar_py/utils/queryparams.py
   - src/speakeasy_bar_py/utils/requestbodies.py
@@ -62,78 +144,37 @@ generatedFiles:
   - src/speakeasy_bar_py/utils/serializers.py
   - src/speakeasy_bar_py/utils/url.py
   - src/speakeasy_bar_py/utils/values.py
-  - src/speakeasy_bar_py/models/errors/sdkerror.py
-  - src/speakeasy_bar_py/models/operations/authenticate.py
-  - src/speakeasy_bar_py/models/operations/listdrinks.py
-  - src/speakeasy_bar_py/models/operations/getdrink.py
-  - src/speakeasy_bar_py/models/operations/listingredients.py
-  - src/speakeasy_bar_py/models/operations/createorder.py
-  - src/speakeasy_bar_py/models/operations/subscribetowebhooks.py
-  - src/speakeasy_bar_py/models/operations/__init__.py
-  - src/speakeasy_bar_py/models/components/error.py
-  - src/speakeasy_bar_py/models/components/httpmetadata.py
-  - src/speakeasy_bar_py/models/components/drink.py
-  - src/speakeasy_bar_py/models/components/drinktype.py
-  - src/speakeasy_bar_py/models/components/order.py
-  - src/speakeasy_bar_py/models/components/ordertype.py
-  - src/speakeasy_bar_py/models/components/order_input.py
-  - src/speakeasy_bar_py/models/components/security.py
-  - src/speakeasy_bar_py/models/components/schemeclientcredentials.py
-  - src/speakeasy_bar_py/models/components/ingredient.py
-  - src/speakeasy_bar_py/models/components/ingredienttype.py
-  - src/speakeasy_bar_py/models/components/drink_input.py
-  - src/speakeasy_bar_py/models/components/__init__.py
-  - src/speakeasy_bar_py/models/errors/apierror.py
-  - src/speakeasy_bar_py/models/errors/__init__.py
-  - src/speakeasy_bar_py/models/callbacks/createorder.py
-  - src/speakeasy_bar_py/models/callbacks/__init__.py
-  - src/speakeasy_bar_py/models/webhooks/stockupdate.py
-  - src/speakeasy_bar_py/models/webhooks/__init__.py
-  - docs/models/operations/authenticaterequestbody.md
-  - docs/models/operations/authenticateresponsebody.md
-  - docs/models/operations/authenticateresponse.md
-  - docs/models/operations/listdrinksrequest.md
-  - docs/models/operations/listdrinksresponse.md
-  - docs/models/operations/getdrinkrequest.md
-  - docs/models/operations/getdrinkresponse.md
-  - docs/models/operations/listingredientsrequest.md
-  - docs/models/operations/data.md
-  - docs/models/operations/listingredientsresponsebody.md
-  - docs/models/operations/listingredientsresponse.md
-  - docs/models/operations/createorderrequest.md
-  - docs/models/operations/createorderresponse.md
-  - docs/models/operations/webhook.md
-  - docs/models/operations/requestbody.md
-  - docs/models/operations/subscribetowebhooksresponse.md
-  - docs/models/components/error.md
-  - docs/models/components/httpmetadata.md
-  - docs/models/components/drink.md
-  - docs/models/components/drinktype.md
-  - docs/models/components/status.md
-  - docs/models/components/order.md
-  - docs/models/components/ordertype.md
-  - docs/models/components/orderinput.md
-  - docs/models/components/security.md
-  - docs/models/components/schemeclientcredentials.md
-  - docs/models/components/ingredient.md
-  - docs/models/components/ingredienttype.md
-  - docs/models/components/drinkinput.md
-  - docs/models/errors/apierror.md
-  - docs/models/callbacks/createorderorderupdateresponse.md
-  - docs/models/callbacks/createorderorderupdaterequestbody.md
-  - docs/models/webhooks/stockupdateresponse.md
-  - docs/models/webhooks/stockupdaterequestbody.md
-  - docs/sdks/barpython/README.md
-  - docs/models/utils/retryconfig.md
-  - docs/sdks/authentication/README.md
-  - docs/sdks/drinks/README.md
-  - docs/sdks/ingredients/README.md
-  - docs/sdks/orders/README.md
-  - docs/sdks/config/README.md
-  - USAGE.md
-  - .gitattributes
-  - src/speakeasy_bar_py/_hooks/sdkhooks.py
-  - src/speakeasy_bar_py/_hooks/types.py
-  - src/speakeasy_bar_py/_hooks/__init__.py
-  - src/speakeasy_bar_py/_hooks/clientcredentials.py
-  - CONTRIBUTING.md
+examples:
+  authenticate: {}
+  listDrinks:
+    speakeasy-default-list-drinks:
+      responses:
+        "200":
+          application/json: [{"name": "Negroni", "price": 1200, "productCode": "AC-A2DF3"}, {"name": "Old Fashioned", "price": 1500, "productCode": "NAC-3F2D1"}, {"name": "Manhattan", "price": 1500, "productCode": "AC-A2DF3"}]
+        5XX: {}
+        default: {}
+  getDrink:
+    speakeasy-default-get-drink:
+      parameters:
+        path:
+          name: "<value>"
+      responses:
+        "200":
+          application/json: {"name": "Manhattan", "price": 1000, "productCode": "NAC-3F2D1"}
+        5XX: {}
+        default: {}
+  listIngredients:
+    speakeasy-default-list-ingredients:
+      parameters:
+        query:
+          page: 347327
+  createOrder:
+    speakeasy-default-create-order:
+      requestBody:
+        application/json: [{"type": "drink", "productCode": "NAC-3F2D1", "quantity": 837978}, {"type": "drink", "productCode": "NAC-3F2D1", "quantity": 589796}]
+      responses:
+        "200":
+          application/json: {"type": "ingredient", "productCode": "AC-A2DF3", "quantity": 266198, "status": "pending"}
+        5XX: {}
+        default: {}
+  subscribeToWebhooks: {}

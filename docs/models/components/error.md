@@ -1,5 +1,7 @@
 # Error
 
+An unknown error occurred interacting with the API.
+
 
 ## Fields
 
