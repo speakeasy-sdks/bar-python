@@ -54,12 +54,12 @@ s = BarPython(
 res = s.orders.create_order(request_body=[
     {
         "type": components.OrderType.DRINK,
-        "product_code": "NAC-3F2D1",
+        "product_code": "APM-1F2D3",
         "quantity": 837978,
     },
     {
         "type": components.OrderType.DRINK,
-        "product_code": "NAC-3F2D1",
+        "product_code": "AC-A2DF3",
         "quantity": 589796,
     },
 ])
@@ -87,12 +87,12 @@ async def main():
     res = await s.orders.create_order_async(request_body=[
         {
             "type": components.OrderType.DRINK,
-            "product_code": "NAC-3F2D1",
+            "product_code": "APM-1F2D3",
             "quantity": 837978,
         },
         {
             "type": components.OrderType.DRINK,
-            "product_code": "NAC-3F2D1",
+            "product_code": "AC-A2DF3",
             "quantity": 589796,
         },
     ])
