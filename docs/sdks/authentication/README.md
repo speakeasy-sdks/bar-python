@@ -18,13 +18,12 @@ Authenticate with the API by providing a username and password.
 ```python
 from speakeasy_bar_py import BarPython
 
-s = BarPython()
+with BarPython() as s:
+    res = s.authentication.authenticate(request={})
 
-res = s.authentication.authenticate(request={})
-
-if res.object is not None:
-    # handle response
-    pass
+    if res.object is not None:
+        # handle response
+        pass
 
 ```
 

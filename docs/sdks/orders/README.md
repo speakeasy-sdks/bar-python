@@ -19,28 +19,27 @@ Create an order for a drink.
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
-s = BarPython(
+with BarPython(
     security=components.Security(
         api_key="<YOUR_API_KEY_HERE>",
     ),
-)
+) as s:
+    res = s.orders.create_order(request_body=[
+        {
+            "type": components.OrderType.DRINK,
+            "product_code": "APM-1F2D3",
+            "quantity": 837978,
+        },
+        {
+            "type": components.OrderType.DRINK,
+            "product_code": "AC-A2DF3",
+            "quantity": 589796,
+        },
+    ])
 
-res = s.orders.create_order(request_body=[
-    {
-        "type": components.OrderType.DRINK,
-        "product_code": "NAC-3F2D1",
-        "quantity": 837978,
-    },
-    {
-        "type": components.OrderType.DRINK,
-        "product_code": "NAC-3F2D1",
-        "quantity": 589796,
-    },
-])
-
-if res.order is not None:
-    # handle response
-    pass
+    if res.order is not None:
+        # handle response
+        pass
 
 ```
 

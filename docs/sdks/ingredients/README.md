@@ -19,17 +19,16 @@ Get a list of ingredients, if authenticated this will include stock levels and p
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
-s = BarPython(
+with BarPython(
     security=components.Security(
         api_key="<YOUR_API_KEY_HERE>",
     ),
-)
+) as s:
+    res = s.ingredients.list_ingredients(page=347327)
 
-res = s.ingredients.list_ingredients(page=347327)
-
-if res.object is not None:
-    # handle response
-    pass
+    if res.object is not None:
+        # handle response
+        pass
 
 ```
 

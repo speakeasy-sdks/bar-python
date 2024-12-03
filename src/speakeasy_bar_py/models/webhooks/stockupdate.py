@@ -13,6 +13,17 @@ from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
+class StockUpdateRequestBodyTypedDict(TypedDict):
+    drink: NotRequired[components_drink_input.DrinkInputTypedDict]
+    ingredient: NotRequired[components_ingredient.IngredientTypedDict]
+
+
+class StockUpdateRequestBody(BaseModel):
+    drink: Optional[components_drink_input.DrinkInput] = None
+
+    ingredient: Optional[components_ingredient.Ingredient] = None
+
+
 class StockUpdateResponseTypedDict(TypedDict):
     http_meta: components_httpmetadata.HTTPMetadataTypedDict
     error: NotRequired[components_error.ErrorTypedDict]
@@ -26,14 +37,3 @@ class StockUpdateResponse(BaseModel):
 
     error: Optional[components_error.Error] = None
     r"""An unknown error occurred interacting with the API."""
-
-
-class StockUpdateRequestBodyTypedDict(TypedDict):
-    drink: NotRequired[components_drink_input.DrinkInputTypedDict]
-    ingredient: NotRequired[components_ingredient.IngredientTypedDict]
-
-
-class StockUpdateRequestBody(BaseModel):
-    drink: Optional[components_drink_input.DrinkInput] = None
-
-    ingredient: Optional[components_ingredient.Ingredient] = None

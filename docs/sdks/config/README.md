@@ -17,19 +17,18 @@ Subscribe to webhooks.
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
-s = BarPython(
+with BarPython(
     security=components.Security(
         api_key="<YOUR_API_KEY_HERE>",
     ),
-)
+) as s:
+    res = s.config.subscribe_to_webhooks(request=[
+        {},
+    ])
 
-res = s.config.subscribe_to_webhooks(request=[
-    {},
-])
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
