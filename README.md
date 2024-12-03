@@ -28,17 +28,23 @@ For more information about the API: [The Speakeasy Bar Documentation.](https://d
 
 <!-- Start Table of Contents [toc] -->
 ## Table of Contents
+<!-- $toc-max-depth=2 -->
+* [speakeasy-bar-py](#speakeasy-bar-py)
+  * [🏗 **Welcome to your new SDK!** 🏗](#welcome-to-your-new-sdk)
+  * [SDK Installation](#sdk-installation)
+  * [IDE Support](#ide-support)
+  * [SDK Example Usage](#sdk-example-usage)
+  * [Available Resources and Operations](#available-resources-and-operations)
+  * [Retries](#retries)
+  * [Error Handling](#error-handling)
+  * [Server Selection](#server-selection)
+  * [Custom HTTP Client](#custom-http-client)
+  * [Authentication](#authentication)
+  * [Debugging](#debugging)
+* [Development](#development)
+  * [Maturity](#maturity)
+  * [Contributions](#contributions)
 
-* [SDK Installation](#sdk-installation)
-* [IDE Support](#ide-support)
-* [SDK Example Usage](#sdk-example-usage)
-* [Available Resources and Operations](#available-resources-and-operations)
-* [Retries](#retries)
-* [Error Handling](#error-handling)
-* [Server Selection](#server-selection)
-* [Custom HTTP Client](#custom-http-client)
-* [Authentication](#authentication)
-* [Debugging](#debugging)
 <!-- End Table of Contents [toc] -->
 
 <!-- Start SDK Installation [installation] -->
@@ -83,17 +89,16 @@ Generally, the SDK will work well with most IDEs out of the box. However, when u
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
-s = BarPython(
+with BarPython(
     security=components.Security(
         api_key="<YOUR_API_KEY_HERE>",
     ),
-)
+) as s:
+    res = s.drinks.list_drinks()
 
-res = s.drinks.list_drinks()
-
-if res.drinks is not None:
-    # handle response
-    pass
+    if res.drinks is not None:
+        # handle response
+        pass
 ```
 
 </br>
@@ -106,15 +111,16 @@ from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
 async def main():
-    s = BarPython(
+    async with BarPython(
         security=components.Security(
             api_key="<YOUR_API_KEY_HERE>",
         ),
-    )
-    res = await s.drinks.list_drinks_async()
-    if res.drinks is not None:
-        # handle response
-        pass
+    ) as s:
+        res = await s.drinks.list_drinks_async()
+
+        if res.drinks is not None:
+            # handle response
+            pass
 
 asyncio.run(main())
 ```
@@ -126,28 +132,27 @@ asyncio.run(main())
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
-s = BarPython(
+with BarPython(
     security=components.Security(
         api_key="<YOUR_API_KEY_HERE>",
     ),
-)
+) as s:
+    res = s.orders.create_order(request_body=[
+        {
+            "type": components.OrderType.DRINK,
+            "product_code": "APM-1F2D3",
+            "quantity": 837978,
+        },
+        {
+            "type": components.OrderType.DRINK,
+            "product_code": "AC-A2DF3",
+            "quantity": 589796,
+        },
+    ])
 
-res = s.orders.create_order(request_body=[
-    {
-        "type": components.OrderType.DRINK,
-        "product_code": "NAC-3F2D1",
-        "quantity": 837978,
-    },
-    {
-        "type": components.OrderType.DRINK,
-        "product_code": "NAC-3F2D1",
-        "quantity": 589796,
-    },
-])
-
-if res.order is not None:
-    # handle response
-    pass
+    if res.order is not None:
+        # handle response
+        pass
 ```
 
 </br>
@@ -160,26 +165,27 @@ from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
 async def main():
-    s = BarPython(
+    async with BarPython(
         security=components.Security(
             api_key="<YOUR_API_KEY_HERE>",
         ),
-    )
-    res = await s.orders.create_order_async(request_body=[
-        {
-            "type": components.OrderType.DRINK,
-            "product_code": "NAC-3F2D1",
-            "quantity": 837978,
-        },
-        {
-            "type": components.OrderType.DRINK,
-            "product_code": "NAC-3F2D1",
-            "quantity": 589796,
-        },
-    ])
-    if res.order is not None:
-        # handle response
-        pass
+    ) as s:
+        res = await s.orders.create_order_async(request_body=[
+            {
+                "type": components.OrderType.DRINK,
+                "product_code": "APM-1F2D3",
+                "quantity": 837978,
+            },
+            {
+                "type": components.OrderType.DRINK,
+                "product_code": "AC-A2DF3",
+                "quantity": 589796,
+            },
+        ])
+
+        if res.order is not None:
+            # handle response
+            pass
 
 asyncio.run(main())
 ```
@@ -226,14 +232,13 @@ To change the default retry strategy for a single API call, simply provide a `Re
 from barpython.utils import BackoffStrategy, RetryConfig
 from speakeasy_bar_py import BarPython
 
-s = BarPython()
+with BarPython() as s:
+    res = s.authentication.authenticate(request={},
+        RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
-res = s.authentication.authenticate(request={},
-    RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
-
-if res.object is not None:
-    # handle response
-    pass
+    if res.object is not None:
+        # handle response
+        pass
 
 ```
 
@@ -242,15 +247,14 @@ If you'd like to override the default retry strategy for all operations that sup
 from barpython.utils import BackoffStrategy, RetryConfig
 from speakeasy_bar_py import BarPython
 
-s = BarPython(
+with BarPython(
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
-)
+) as s:
+    res = s.authentication.authenticate(request={})
 
-res = s.authentication.authenticate(request={})
-
-if res.object is not None:
-    # handle response
-    pass
+    if res.object is not None:
+        # handle response
+        pass
 
 ```
 <!-- End Retries [retries] -->
@@ -282,22 +286,21 @@ When custom error responses are specified for an operation, the SDK may also rai
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import errors
 
-s = BarPython()
+with BarPython() as s:
+    res = None
+    try:
+        res = s.authentication.authenticate(request={})
 
-res = None
-try:
-    res = s.authentication.authenticate(request={})
+        if res.object is not None:
+            # handle response
+            pass
 
-    if res.object is not None:
-        # handle response
-        pass
-
-except errors.APIError as e:
-    # handle e.data: errors.APIErrorData
-    raise(e)
-except errors.SDKError as e:
-    # handle exception
-    raise(e)
+    except errors.APIError as e:
+        # handle e.data: errors.APIErrorData
+        raise(e)
+    except errors.SDKError as e:
+        # handle exception
+        raise(e)
 ```
 <!-- End Error Handling [errors] -->
 
@@ -321,15 +324,14 @@ If the selected server has variables, you may override their default values thro
 ```python
 from speakeasy_bar_py import BarPython
 
-s = BarPython(
+with BarPython(
     server="customer",
-)
+) as s:
+    res = s.authentication.authenticate(request={})
 
-res = s.authentication.authenticate(request={})
-
-if res.object is not None:
-    # handle response
-    pass
+    if res.object is not None:
+        # handle response
+        pass
 
 ```
 
@@ -339,15 +341,14 @@ The default server can also be overridden globally by passing a URL to the `serv
 ```python
 from speakeasy_bar_py import BarPython
 
-s = BarPython(
+with BarPython(
     server_url="https://speakeasy.bar",
-)
+) as s:
+    res = s.authentication.authenticate(request={})
 
-res = s.authentication.authenticate(request={})
-
-if res.object is not None:
-    # handle response
-    pass
+    if res.object is not None:
+        # handle response
+        pass
 
 ```
 <!-- End Server Selection [server] -->
@@ -450,17 +451,16 @@ You can set the security parameters through the `security` optional parameter wh
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
-s = BarPython(
+with BarPython(
     security=components.Security(
         api_key="<YOUR_API_KEY_HERE>",
     ),
-)
+) as s:
+    res = s.authentication.authenticate(request={})
 
-res = s.authentication.authenticate(request={})
-
-if res.object is not None:
-    # handle response
-    pass
+    if res.object is not None:
+        # handle response
+        pass
 
 ```
 <!-- End Authentication [security] -->

@@ -3,17 +3,17 @@ id: 2ebfbbaa-03d2-4ef1-a2dd-71006dd37355
 management:
   docChecksum: 936f0ff0f6ac9e56df38e51b2591854f
   docVersion: 1.0.0
-  speakeasyVersion: 1.438.1
-  generationVersion: 2.457.2
-  releaseVersion: 0.2.0
-  configChecksum: c73f2eded01903016cef9c24fdf93870
+  speakeasyVersion: 1.451.1
+  generationVersion: 2.470.1
+  releaseVersion: 1.0.0
+  configChecksum: aedb9c7f438618c16563bd0bedd135cd
   repoURL: https://github.com/speakeasy-sdks/bar-python.git
   installationURL: https://github.com/speakeasy-sdks/bar-python.git
 features:
   python:
     additionalDependencies: 1.0.0
     callbacks: 2.0.0
-    core: 5.6.4
+    core: 5.6.8
     defaultEnabledRetries: 0.2.0
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.3.2
@@ -29,7 +29,6 @@ features:
     retries: 3.0.2
     sdkHooks: 1.0.0
     serverIDs: 3.0.0
-    tests: 1.6.0
     webhooks: 2.0.0
 generatedFiles:
   - .gitattributes
@@ -150,7 +149,7 @@ examples:
     speakeasy-default-list-drinks:
       responses:
         "200":
-          application/json: [{"name": "Negroni", "price": 1200, "productCode": "AC-A2DF3"}, {"name": "Old Fashioned", "price": 1500, "productCode": "NAC-3F2D1"}, {"name": "Manhattan", "price": 1500, "productCode": "AC-A2DF3"}]
+          application/json: [{"name": "Negroni", "price": 1500, "productCode": "NAC-3F2D1"}, {"name": "Old Fashioned", "price": 1000, "productCode": "APM-1F2D3"}, {"name": "Manhattan", "price": 1200, "productCode": "APM-1F2D3"}]
         5XX: {}
         default: {}
   getDrink:
@@ -171,10 +170,15 @@ examples:
   createOrder:
     speakeasy-default-create-order:
       requestBody:
-        application/json: [{"type": "drink", "productCode": "NAC-3F2D1", "quantity": 837978}, {"type": "drink", "productCode": "NAC-3F2D1", "quantity": 589796}]
+        application/json: [{"type": "drink", "productCode": "APM-1F2D3", "quantity": 837978}, {"type": "drink", "productCode": "AC-A2DF3", "quantity": 589796}]
       responses:
         "200":
-          application/json: {"type": "ingredient", "productCode": "AC-A2DF3", "quantity": 266198, "status": "pending"}
+          application/json: {"type": "ingredient", "productCode": "NAC-3F2D1", "quantity": 266198, "status": "pending"}
         5XX: {}
         default: {}
   subscribeToWebhooks: {}
+  stockUpdate:
+    speakeasy-default-stock-update:
+      requestBody:
+        application/json: {"drink": {"name": "Negroni", "price": 1200, "productCode": "NAC-3F2D1"}, "ingredient": {"name": "Angostura Bitters", "type": "fresh", "productCode": "AC-A2DF3"}}
+generatedTests: {}

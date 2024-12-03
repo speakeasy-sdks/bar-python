@@ -4,17 +4,16 @@
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
-s = BarPython(
+with BarPython(
     security=components.Security(
         api_key="<YOUR_API_KEY_HERE>",
     ),
-)
+) as s:
+    res = s.drinks.list_drinks()
 
-res = s.drinks.list_drinks()
-
-if res.drinks is not None:
-    # handle response
-    pass
+    if res.drinks is not None:
+        # handle response
+        pass
 ```
 
 </br>
@@ -27,15 +26,16 @@ from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
 async def main():
-    s = BarPython(
+    async with BarPython(
         security=components.Security(
             api_key="<YOUR_API_KEY_HERE>",
         ),
-    )
-    res = await s.drinks.list_drinks_async()
-    if res.drinks is not None:
-        # handle response
-        pass
+    ) as s:
+        res = await s.drinks.list_drinks_async()
+
+        if res.drinks is not None:
+            # handle response
+            pass
 
 asyncio.run(main())
 ```
@@ -45,28 +45,27 @@ asyncio.run(main())
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
-s = BarPython(
+with BarPython(
     security=components.Security(
         api_key="<YOUR_API_KEY_HERE>",
     ),
-)
+) as s:
+    res = s.orders.create_order(request_body=[
+        {
+            "type": components.OrderType.DRINK,
+            "product_code": "APM-1F2D3",
+            "quantity": 837978,
+        },
+        {
+            "type": components.OrderType.DRINK,
+            "product_code": "AC-A2DF3",
+            "quantity": 589796,
+        },
+    ])
 
-res = s.orders.create_order(request_body=[
-    {
-        "type": components.OrderType.DRINK,
-        "product_code": "NAC-3F2D1",
-        "quantity": 837978,
-    },
-    {
-        "type": components.OrderType.DRINK,
-        "product_code": "NAC-3F2D1",
-        "quantity": 589796,
-    },
-])
-
-if res.order is not None:
-    # handle response
-    pass
+    if res.order is not None:
+        # handle response
+        pass
 ```
 
 </br>
@@ -79,26 +78,27 @@ from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
 async def main():
-    s = BarPython(
+    async with BarPython(
         security=components.Security(
             api_key="<YOUR_API_KEY_HERE>",
         ),
-    )
-    res = await s.orders.create_order_async(request_body=[
-        {
-            "type": components.OrderType.DRINK,
-            "product_code": "NAC-3F2D1",
-            "quantity": 837978,
-        },
-        {
-            "type": components.OrderType.DRINK,
-            "product_code": "NAC-3F2D1",
-            "quantity": 589796,
-        },
-    ])
-    if res.order is not None:
-        # handle response
-        pass
+    ) as s:
+        res = await s.orders.create_order_async(request_body=[
+            {
+                "type": components.OrderType.DRINK,
+                "product_code": "APM-1F2D3",
+                "quantity": 837978,
+            },
+            {
+                "type": components.OrderType.DRINK,
+                "product_code": "AC-A2DF3",
+                "quantity": 589796,
+            },
+        ])
+
+        if res.order is not None:
+            # handle response
+            pass
 
 asyncio.run(main())
 ```

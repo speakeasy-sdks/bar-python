@@ -20,17 +20,16 @@ Get a list of drinks, if authenticated this will include stock levels and produc
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
-s = BarPython(
+with BarPython(
     security=components.Security(
         api_key="<YOUR_API_KEY_HERE>",
     ),
-)
+) as s:
+    res = s.drinks.list_drinks()
 
-res = s.drinks.list_drinks()
-
-if res.drinks is not None:
-    # handle response
-    pass
+    if res.drinks is not None:
+        # handle response
+        pass
 
 ```
 
@@ -62,17 +61,16 @@ Get a drink by name, if authenticated this will include stock levels and product
 from speakeasy_bar_py import BarPython
 from speakeasy_bar_py.models import components
 
-s = BarPython(
+with BarPython(
     security=components.Security(
         api_key="<YOUR_API_KEY_HERE>",
     ),
-)
+) as s:
+    res = s.drinks.get_drink(name="<value>")
 
-res = s.drinks.get_drink(name="<value>")
-
-if res.drink is not None:
-    # handle response
-    pass
+    if res.drink is not None:
+        # handle response
+        pass
 
 ```
 
