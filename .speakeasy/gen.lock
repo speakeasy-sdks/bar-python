@@ -5,8 +5,8 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.451.6
   generationVersion: 2.471.2
-  releaseVersion: 1.0.2
-  configChecksum: 7ce96b49322eac8343aef5ab776cbfaf
+  releaseVersion: 1.0.3
+  configChecksum: 1d52f6a67f6b6eea2b1efe0bd1e0aaf9
   repoURL: https://github.com/speakeasy-sdks/bar-python.git
   installationURL: https://github.com/speakeasy-sdks/bar-python.git
 features:
