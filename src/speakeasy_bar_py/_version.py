@@ -3,7 +3,7 @@
 import importlib.metadata
 
 __title__: str = "speakeasy-bar-py"
-__version__: str = "1.0.2"
+__version__: str = "1.0.3"
 
 try:
     if __package__ is not None:
